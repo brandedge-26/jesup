@@ -17,35 +17,25 @@ export default function Home() {
 
   return (
     <>
-      {/* Always-visible icon sidebar (desktop only) */}
-      <div className="hidden lg:block">
-        <CategorySidebar
-          externalOpen={categoryOpen}
-          onRequestClose={() => setCategoryOpen(false)}
-        />
-      </div>
+      {/*
+        CategorySidebar renders two internal sub-components:
+        - DesktopSidebar (visible ≥1024px via .sidebar-desktop CSS class)
+        - MobileSidebar  (visible <1024px  via .sidebar-mobile  CSS class)
+        Both read the same externalOpen / onRequestClose props.
+      */}
+      <CategorySidebar
+        externalOpen={categoryOpen}
+        onRequestClose={() => setCategoryOpen(false)}
+      />
 
-      {/* Mobile sidebar (no icon strip — full drawer) */}
-      {categoryOpen && (
-        <div className="flex lg:hidden">
-          <CategorySidebar
-            externalOpen={true}
-            onRequestClose={() => setCategoryOpen(false)}
-          />
-        </div>
-      )}
-
-      {/* Main content — offset by sidebar width on desktop */}
+      {/* Main page — offset by 52px on desktop to clear the icon rail */}
       <div
-        className="lg:pl-[52px]"
+        className="sidebar-offset"
         style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
       >
-        <Navbar onCategoryToggle={() => setCategoryOpen((v) => !v)} />
+        <Navbar onCategoryToggle={() => setCategoryOpen(v => !v)} />
 
-        <main
-          className="pb-16 lg:pb-0"
-          style={{ flex: 1 }}
-        >
+        <main className="pb-16 lg:pb-0" style={{ flex: 1 }}>
           <HeroSection />
           <ShopByCategory />
           <NewArrivals />

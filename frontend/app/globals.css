@@ -53,7 +53,7 @@
 ───────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   font-family: var(--font);
@@ -61,6 +61,7 @@ body {
   color: var(--foreground);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
   letter-spacing: -0.01em;
 }
 
@@ -122,16 +123,38 @@ body {
   margin-bottom: 1.25rem;
 }
 
+/* Sidebar offset for icon rail */
+.sidebar-offset { padding-left: 0; }
+@media (min-width: 1024px) { .sidebar-offset { padding-left: 52px; } }
+
+/* Show/hide helpers that don't depend on Tailwind JIT */
+.mobile-only { display: none; }
+@media (max-width: 1023px) { .mobile-only { display: flex; } }
+.desktop-only { display: flex; }
+@media (max-width: 1023px) { .desktop-only { display: none !important; } }
+
 /* Sidebar & Drawer Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to   { opacity: 1; }
 }
 @keyframes slideInRight {
-  from { transform: translateX(100%); opacity: 0; }
-  to   { transform: translateX(0);    opacity: 1; }
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to   { transform: translateX(0); }
 }
 @keyframes flyoutIn {
   from { opacity: 0; transform: translateX(-10px); }
   to   { opacity: 1; transform: translateX(0); }
+}
+
+/* Sidebar responsive helpers */
+.sidebar-desktop { display: flex !important; }
+.sidebar-mobile  { display: none  !important; }
+@media (max-width: 1023px) {
+  .sidebar-desktop { display: none  !important; }
+  .sidebar-mobile  { display: flex  !important; }
 }

@@ -209,8 +209,8 @@ export default function HeroSection() {
       </section>
 
       {/* ─── Info Strip ─── */}
-      <div style={{ backgroundColor: "#fff", borderBottom: "1px solid #e8edf3", overflowX: "auto" }}>
-        <div className="container-xl" style={{ display: "flex", alignItems: "center", height: 52, minWidth: "max-content" }}>
+      <div style={{ backgroundColor: "#fff", borderBottom: "1px solid #e8edf3", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
+        <div style={{ display: "flex", alignItems: "center", height: 52, minWidth: "max-content", padding: "0 1.5rem" }}>
           {INFO_ITEMS.map((item, i) => (
             <div key={item.label} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 20px", borderRight: i < INFO_ITEMS.length - 1 ? "1px solid #eeeeee" : "none", flexShrink: 0 }}>
               <span style={{ color: item.color, display: "flex", flexShrink: 0 }}>{item.icon}</span>
