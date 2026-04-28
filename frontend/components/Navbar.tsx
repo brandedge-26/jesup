@@ -1,5 +1,5 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import CartSidebar from "./CartSidebar";
 
 const NAV_LINKS = [
@@ -25,6 +25,42 @@ export default function Navbar({ onCategoryToggle }: Props) {
   const [catDropOpen,    setCatDropOpen]    = useState(false);
   const [searchFocused,  setSearchFocused]  = useState(false);
   const catDropRef = useRef<HTMLDivElement>(null);
+  const [headerState, setHeaderState] = useState<"full" | "compact" | "hidden">("full");
+  const lastScrollY    = useRef(0);
+  const transitioning  = useRef(false);
+
+  useEffect(() => {
+    const onScroll = () => {
+      // Ignore scroll events caused by our own layout shifts
+      if (transitioning.current) {
+        lastScrollY.current = window.scrollY;
+        return;
+      }
+      const y = window.scrollY;
+      const goingDown = y > lastScrollY.current;
+      lastScrollY.current = y;
+
+      setHeaderState(prev => {
+        let next = prev;
+        if (y <= 16) {
+          next = "full";
+        } else if (goingDown) {
+          if (y > 80  && prev === "full")    next = "compact";
+          if (y > 400 && prev !== "hidden")  next = "hidden";
+        } else {
+          if (prev === "hidden")             next = "compact";
+          else if (y < 70 && prev === "compact") next = "full";
+        }
+        if (next !== prev) {
+          transitioning.current = true;
+          setTimeout(() => { transitioning.current = false; }, 380);
+        }
+        return next;
+      });
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   /* ── shared search bar (used in both mobile row and desktop header) ── */
   const SearchBar = ({ slim, hideCatDrop }: { slim?: boolean; hideCatDrop?: boolean }) => (
@@ -203,16 +239,24 @@ export default function Navbar({ onCategoryToggle }: Props) {
       </header>
 
       {/* ══════════════════════════════════════════
-          DESKTOP HEADER  (≥ 1024px)
+          DESKTOP HEADER  (≥ 1024px) — FIXED
           Row 1: Logo | Search (flex-1) | Contact
           Row 2: All Categories | Nav links | Cart
       ══════════════════════════════════════════ */}
       <header className="desktop-only" style={{
-        backgroundColor: "#fff", borderBottom: "1px solid #ebebeb",
-        position: "sticky", top: 0, zIndex: 40,
+        position: "fixed", top: 0, left: 52, right: 0, zIndex: 40,
         flexDirection: "column",
+        backgroundColor: "#fff",
+        borderBottom: "1px solid #ebebeb",
+        transform: headerState === "hidden" ? "translateY(-100%)" : "translateY(0)",
+        transition: "transform 0.32s cubic-bezier(0.4,0,0.2,1)",
       }}>
-        {/* Row 1 */}
+        {/* Row 1 — collapses on scroll */}
+        <div style={{
+          overflow: "hidden",
+          maxHeight: headerState === "full" ? "80px" : "0px",
+          transition: "max-height 0.32s cubic-bezier(0.4,0,0.2,1)",
+        }}>
         <div className="container-xl" style={{
           display: "flex", alignItems: "center",
           justifyContent: "space-between",
@@ -252,10 +296,11 @@ export default function Navbar({ onCategoryToggle }: Props) {
             </div>
           </div>
         </div>
+        </div>{/* end collapsible Row 1 */}
 
-        {/* Row 2 — nav strip */}
+        {/* Row 2 — nav strip (always visible when header is visible) */}
         <div style={{ backgroundColor: "#fafafa", borderTop: "1px solid #eeeeee" }}>
-          <div className="container-xl" style={{ display: "flex", alignItems: "center", height: 44, gap: 4, width: "100%" }}>
+          <div className="container-xl" style={{ display: "flex", alignItems: "center", height: 56, gap: 4, width: "100%" }}>
 
             {/* All Categories */}
             <button
@@ -332,6 +377,12 @@ export default function Navbar({ onCategoryToggle }: Props) {
           </div>
         </div>
       </header>
+
+      {/* Spacer — pushes page content below the fixed desktop header (no transition to avoid scroll feedback) */}
+      <div className="desktop-only" style={{
+        flexShrink: 0,
+        height: headerState === "full" ? 126 : headerState === "compact" ? 58 : 0,
+      }}/>
 
       {/* Cart drawer */}
       <CartSidebar isOpen={cartOpen} onClose={() => setCartOpen(false)} />

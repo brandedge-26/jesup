@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 /* ── Category data ── */
 const CATEGORIES = [
@@ -121,6 +121,18 @@ interface Props {
 function DesktopSidebar({ externalOpen, onRequestClose }: Props) {
   const [hovered,  setHovered]  = useState(false);
   const [activeCat, setActiveCat] = useState<string | null>(null);
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const clearTimer = () => {
+    if (hideTimer.current) { clearTimeout(hideTimer.current); hideTimer.current = null; }
+  };
+  const startTimer = () => {
+    clearTimer();
+    hideTimer.current = setTimeout(() => {
+      setHovered(false);
+      setActiveCat(null);
+    }, 150);
+  };
 
   const isExpanded = hovered || !!externalOpen;
   const current    = CATEGORIES.find(c => c.label === activeCat);
@@ -145,8 +157,8 @@ function DesktopSidebar({ externalOpen, onRequestClose }: Props) {
           transition: "width 0.25s cubic-bezier(0.4,0,0.2,1), box-shadow 0.25s",
           overflow: "hidden", display: "flex", flexDirection: "column",
         }}
-        onMouseEnter={() => setHovered(true)}
-        onMouseLeave={() => { setHovered(false); setActiveCat(null); }}
+        onMouseEnter={() => { clearTimer(); setHovered(true); }}
+        onMouseLeave={startTimer}
       >
         {/* Header */}
         <div style={{
@@ -183,8 +195,7 @@ function DesktopSidebar({ externalOpen, onRequestClose }: Props) {
                     color: isActive ? cat.color : "#333",
                     fontWeight: isActive ? 600 : 500, fontSize: "0.875rem",
                   }}
-                  onMouseEnter={() => setActiveCat(cat.label)}
-                  onMouseLeave={() => { if (!cat.sub) setActiveCat(null); }}
+                  onMouseEnter={() => { clearTimer(); setActiveCat(cat.label); }}
                 >
                   <div style={{
                     width: 30, height: 30, borderRadius: 8, flexShrink: 0,
@@ -218,8 +229,8 @@ function DesktopSidebar({ externalOpen, onRequestClose }: Props) {
             overflowY: "auto", padding: "26px 34px",
             animation: "flyoutIn 0.18s ease",
           }}
-          onMouseEnter={() => setActiveCat(current.label)}
-          onMouseLeave={() => setActiveCat(null)}
+          onMouseEnter={clearTimer}
+          onMouseLeave={startTimer}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 18, paddingBottom: 14, borderBottom: `2px solid ${current.color}` }}>
             <div style={{ width: 34, height: 34, borderRadius: 9, backgroundColor: `${current.color}15`, display: "flex", alignItems: "center", justifyContent: "center" }}>
