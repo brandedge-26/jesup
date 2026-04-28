@@ -1,0 +1,137 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────
+   Design Tokens
+───────────────────────────────────────── */
+:root {
+  /* Brand */
+  --primary:            #0a0a0a;
+  --primary-foreground: #ffffff;
+
+  --accent:             #00c2b0;
+  --accent-hover:       #00a899;
+  --accent-subtle:      #e6faf8;
+  --accent-foreground:  #ffffff;
+
+  --secondary:          #f7f7f7;
+  --secondary-dark:     #efefef;
+
+  --background:         #ffffff;
+  --foreground:         #0a0a0a;
+  --muted:              #6b7280;
+  --muted-light:        #d1d5db;
+
+  --border:             #e8e8e8;
+  --border-dark:        #d0d0d0;
+
+  --card:               #ffffff;
+  --card-hover:         #fafafa;
+
+  /* Radius */
+  --radius-xs: 4px;
+  --radius-sm: 8px;
+  --radius:    12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+
+  /* Shadows */
+  --shadow-xs: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.07);
+  --shadow:    0 4px 20px rgba(0,0,0,0.10);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.14);
+
+  /* Font */
+  --font: var(--font-work-sans), "Helvetica Neue", Arial, sans-serif;
+
+  /* Letter spacing for headings */
+  --ls-tight: -0.04em;
+  --ls-heading: -0.03em;
+}
+
+/* ─────────────────────────────────────────
+   Base Reset
+───────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+/* ─────────────────────────────────────────
+   Typography helpers
+───────────────────────────────────────── */
+.heading-display {
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+}
+.heading-lg {
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+}
+.heading-md {
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.2;
+}
+.label-overline {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* ─────────────────────────────────────────
+   Utilities
+───────────────────────────────────────── */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+.container-xl {
+  max-width: 1280px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+}
+@media (min-width: 768px) {
+  .container-xl { padding-inline: 2.5rem; }
+}
+
+/* Smooth hover transition for interactive elements */
+.hoverable {
+  transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+}
+.hoverable:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* Section divider line */
+.section-divider {
+  width: 40px;
+  height: 3px;
+  background: var(--accent);
+  border-radius: 99px;
+  margin-bottom: 1.25rem;
+}
+
+/* Sidebar & Drawer Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
+}
+@keyframes flyoutIn {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
