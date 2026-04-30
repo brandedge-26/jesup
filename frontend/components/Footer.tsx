@@ -20,16 +20,16 @@ const SOCIAL = [
 ];
 
 const PERKS = [
-  { Icon: Package, title: "Free Delivery", desc: "On orders Rs. 2,999+" },
+  { Icon: Package, title: "Free Delivery", desc: "On orders $49+" },
   { Icon: ShieldCheck, title: "Secure Payment", desc: "100% protected checkout" },
   { Icon: Headphones, title: "24/7 Support", desc: "WhatsApp & call support" },
   { Icon: RefreshCw, title: "Easy Returns", desc: "7-day return policy" },
 ];
 
 const CONTACT = [
-  { Icon: Phone, text: "(021) 32239001" },
-  { Icon: MapPin, text: "Lahore · Karachi · Islamabad" },
-  { Icon: Mail, text: "support@jesup.pk" },
+  { Icon: Phone, text: "+1 (912) 427-0000" },
+  { Icon: MapPin, text: "Jesup, GA 31545, United States" },
+  { Icon: Mail, text: "support@jesupwireless.com" },
 ];
 
 export default function Footer() {
@@ -118,7 +118,7 @@ export default function Footer() {
                 </span>
               </a>
               <p style={{ fontSize: "0.8125rem", color: "#9ca3af", lineHeight: 1.75, marginBottom: "1.25rem", maxWidth: 260 }}>
-                Pakistan's trusted source for premium mobile parts, LCD panels, and repair accessories.
+                America's trusted source for premium mobile accessories, cases, chargers, and more.
               </p>
 
               <div style={{ display: "flex", flexDirection: "column", gap: 9, marginBottom: "1.5rem" }}>
@@ -251,8 +251,11 @@ export default function Footer() {
           border: 1.5px solid #ede9fe;
         }
         @media (max-width: 600px) {
-          .footer-newsletter { padding: 1.25rem; }
-          .footer-newsletter > div:last-child { width: 100%; max-width: 100% !important; }
+          .footer-newsletter { padding: 1.25rem; flex-direction: column; }
+          .footer-newsletter > div:last-child { width: 100%; max-width: 100% !important; flex: unset !important; }
+          .footer-nl-row { flex-direction: column !important; }
+          .footer-nl-row input { border-right: 1.5px solid #e5e7eb !important; border-radius: 10px !important; margin-bottom: 8px; }
+          .footer-nl-row button { border-radius: 10px !important; width: 100%; padding: 11px !important; }
         }
 
         /* Main columns */

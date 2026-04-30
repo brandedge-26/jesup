@@ -6,7 +6,7 @@ const PRODUCTS = [
   {
     id: 1, brand: "Apple", name: "iPhone 15 Pro",
     desc: "Titanium design, A17 Pro chip",
-    price: "Rs. 1,299",
+    price: "$29.99",
     tag: "Best Seller", tagColor: "#fff", tagBg: "#111", tagTextColor: "#fff",
     accent: "#6C63FF",
     cardBg: "linear-gradient(145deg, #1a1a2e 0%, #16213e 100%)",
@@ -15,7 +15,7 @@ const PRODUCTS = [
   {
     id: 2, brand: "Google", name: "Pixel 9 Pro",
     desc: "Google AI camera, pure Android",
-    price: "Rs. 999",
+    price: "$24.99",
     tag: "New", tagColor: "#fff", tagBg: "#6C63FF", tagTextColor: "#fff",
     accent: "#6C63FF",
     cardBg: "linear-gradient(145deg, #0f2027 0%, #203a43 100%)",
@@ -24,7 +24,7 @@ const PRODUCTS = [
   {
     id: 3, brand: "Samsung", name: "Galaxy S25 Ultra",
     desc: "S Pen, 200MP camera system",
-    price: "Rs. 849",
+    price: "$19.99",
     tag: "Best Seller", tagColor: "#fff", tagBg: "#111", tagTextColor: "#fff",
     accent: "#2563eb",
     cardBg: "linear-gradient(145deg, #0a0a1a 0%, #1a1a3e 100%)",
@@ -33,7 +33,7 @@ const PRODUCTS = [
   {
     id: 4, brand: "Apple", name: "iPhone 14 Pro",
     desc: "Dynamic Island, 48MP camera",
-    price: "Rs. 1,599",
+    price: "$34.99",
     tag: "Hot Deal", tagColor: "#fff", tagBg: "#ef4444", tagTextColor: "#fff",
     accent: "#6b7280",
     cardBg: "linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%)",

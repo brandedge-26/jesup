@@ -57,10 +57,10 @@ export default function WelcomeBanner() {
               lineHeight: 1.8, letterSpacing: "-0.01em", maxWidth: 460,
               marginBottom: "2rem",
             }}>
-              At Jesup Wireless, we pride ourselves on being the go-to distributor for premium mobile accessories. We partner with industry-leading names like{" "}
+              Based in Jesup, Georgia, we are America&apos;s trusted wholesale distributor for premium mobile accessories. We partner with industry-leading names like{" "}
               <strong style={{ color: "rgba(255,255,255,0.85)", fontWeight: 600 }}>Nimbuzz</strong>,{" "}
               <strong style={{ color: "rgba(255,255,255,0.85)", fontWeight: 600 }}>ZIZO</strong>, and{" "}
-              <strong style={{ color: "rgba(255,255,255,0.85)", fontWeight: 600 }}>CLICK</strong> — offering a wide selection of cases, chargers, audio products, and accessories crafted with quality, style, and performance in mind.
+              <strong style={{ color: "rgba(255,255,255,0.85)", fontWeight: 600 }}>CLICK</strong> — offering a wide selection of cases, chargers, screen protectors, and accessories crafted with quality, style, and performance in mind.
             </p>
 
             <a

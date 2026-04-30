@@ -7,7 +7,7 @@ const NAV_LINKS = [
   { label: "Home",            href: "/" },
   { label: "Store",           href: "#" },
   { label: "Support Centre",  href: "#" },
-  { label: "Contact Us",      href: "#" },
+  { label: "Contact Us",      href: "/contact" },
   { label: "Repair Services", href: "#" },
 ];
 

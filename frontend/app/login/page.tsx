@@ -9,7 +9,7 @@ const PRIMARY = "#6C63FF";
 const PRIMARY_GLOW = "rgba(108,99,255,0.18)";
 
 const FEATURES = [
-  { icon: Truck,   text: "Free shipping on orders over Rs. 2,999" },
+  { icon: Truck,   text: "Free shipping on orders over $49" },
   { icon: Star,    text: "Access to exclusive member deals" },
   { icon: Package, text: "Track all your orders in one place" },
   { icon: Lock,    text: "Secure B2B wholesale pricing" },
