@@ -1,11 +1,14 @@
 "use client";
+import Image from "next/image";
+
 const BRANDS = [
   {
     id: 1, name: "ZIZO",
     tagline: "Built for adventure. Built for your journey.",
     desc: "Rugged cases, wireless chargers, and screen protectors engineered for everyday use.",
-    isDark: true, cardBg: "#0d0d0d", accent: "#00c2b0",
-    colors: ["#00c2b0", "#c0392b", "#1e3a8a", "#1a1a1a"],
+    isDark: true, cardBg: "#0d0d0d", accent: "#6C63FF",
+    colors: ["#6C63FF", "#c0392b", "#1e3a8a", "#1a1a1a"],
+    img: "https://images.unsplash.com/photo-1556656793-08538906a9f8?w=600&h=440&fit=crop&q=85",
   },
   {
     id: 2, name: "Nimbuzz",
@@ -13,13 +16,15 @@ const BRANDS = [
     desc: "Sleek, slim-profile cases and accessories designed for the style-conscious user.",
     isDark: false, cardBg: "#ffffff", accent: "#111111",
     colors: ["#1a1a1a", "#d1d5db", "#6b7280", "#e5e7eb"],
+    img: "https://images.unsplash.com/photo-1616348436168-de43ad0db179?w=600&h=440&fit=crop&q=85",
   },
   {
     id: 3, name: "CLICK",
     tagline: "Trend-forward. Wallet-friendly.",
     desc: "On-trend designs and everyday accessories at prices everyone can enjoy.",
-    isDark: false, cardBg: "#f0faf9", accent: "#00a899",
-    colors: ["#00c2b0", "#e0f7f5", "#00a899", "#b2f0ea"],
+    isDark: false, cardBg: "#f0faf9", accent: "#5a52d5",
+    colors: ["#6C63FF", "#e0f7f5", "#5a52d5", "#b2f0ea"],
+    img: "https://images.unsplash.com/photo-1580910051074-3eb694886505?w=600&h=440&fit=crop&q=85",
   },
 ];
 
@@ -55,77 +60,52 @@ export default function ShopByBrand() {
               style={{
                 borderRadius: 20,
                 overflow: "hidden",
-                backgroundColor: brand.cardBg,
-                border: brand.isDark ? "1px solid rgba(255,255,255,0.06)" : "1px solid var(--border)",
-                boxShadow: "var(--shadow)",
+                backgroundColor: "#fff",
+                border: "1px solid #e5e7eb",
+                boxShadow: "var(--shadow-xs)",
                 display: "flex", flexDirection: "column",
                 cursor: "pointer",
-                transition: "transform 0.22s ease, box-shadow 0.22s ease",
-              }}
-              onMouseEnter={e => {
-                (e.currentTarget as HTMLElement).style.transform = "translateY(-6px)";
-                (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow-lg)";
-              }}
-              onMouseLeave={e => {
-                (e.currentTarget as HTMLElement).style.transform = "";
-                (e.currentTarget as HTMLElement).style.boxShadow = "var(--shadow)";
               }}
             >
               {/* Visual area */}
-              <div style={{ position: "relative", height: 220, display: "flex", alignItems: "center", justifyContent: "center", overflow: "hidden" }}>
-                <div style={{ position: "absolute", inset: 0, background: `radial-gradient(ellipse at 50% 100%, ${brand.accent}20 0%, transparent 60%)` }} />
+              <div style={{ position: "relative", height: 220, overflow: "hidden" }}>
+                <Image
+                  src={brand.img}
+                  alt={brand.name}
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "center", mixBlendMode: brand.isDark ? "luminosity" : "multiply", opacity: brand.isDark ? 0.55 : 0.75 }}
+                />
+                {/* Gradient overlay */}
+                <div style={{ position: "absolute", inset: 0, background: brand.isDark ? "linear-gradient(to bottom, transparent 30%, #0d0d0d 100%)" : `linear-gradient(to bottom, transparent 40%, ${brand.cardBg} 100%)` }} />
                 {/* Watermark */}
                 <span style={{
-                  position: "absolute", fontSize: "5rem", fontWeight: 900, letterSpacing: "-0.06em", whiteSpace: "nowrap", lineHeight: 1, userSelect: "none",
-                  color: brand.isDark ? "rgba(255,255,255,0.03)" : "rgba(0,0,0,0.04)",
+                  position: "absolute", bottom: 12, left: "50%", transform: "translateX(-50%)",
+                  fontSize: "3.5rem", fontWeight: 900, letterSpacing: "-0.06em",
+                  whiteSpace: "nowrap", lineHeight: 1, userSelect: "none", zIndex: 1,
+                  color: brand.isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)",
                 }}>
                   {brand.name}
                 </span>
-                {/* Phone trio */}
-                <div style={{ display: "flex", alignItems: "flex-end", gap: 10, height: 160 }}>
-                  {[
-                    { w: 50, h: 96,  rotate: -8, opacity: brand.isDark ? 0.08 : 0.06 },
-                    { w: 62, h: 122, rotate: 0,  opacity: brand.isDark ? 0.0 : 0.0, isFocus: true },
-                    { w: 50, h: 96,  rotate: 8,  opacity: brand.isDark ? 0.06 : 0.05 },
-                  ].map((c, i) => (
-                    <div
-                      key={i}
-                      style={{
-                        width: c.w, height: c.h,
-                        borderRadius: 17, flexShrink: 0,
-                        background: c.isFocus
-                          ? `linear-gradient(160deg, ${brand.accent}22 0%, ${brand.accent}40 100%)`
-                          : brand.isDark ? `rgba(255,255,255,${c.opacity})` : `rgba(0,0,0,${c.opacity})`,
-                        border: c.isFocus
-                          ? `1.5px solid ${brand.accent}45`
-                          : brand.isDark ? "1px solid rgba(255,255,255,0.10)" : "1px solid rgba(0,0,0,0.08)",
-                        transform: `rotate(${c.rotate}deg)`,
-                        boxShadow: c.isFocus ? `0 12px 32px ${brand.accent}18` : "0 4px 14px rgba(0,0,0,0.12)",
-                        alignSelf: "flex-end",
-                      }}
-                    />
-                  ))}
-                </div>
               </div>
 
               {/* Info */}
               <div style={{
                 flex: 1, display: "flex", flexDirection: "column",
                 padding: "20px 22px 22px",
-                backgroundColor: brand.isDark ? "#111" : "#fff",
-                borderTop: brand.isDark ? "1px solid rgba(255,255,255,0.07)" : "1px solid var(--border)",
+                backgroundColor: "#fff",
+                borderTop: "1px solid #e5e7eb",
               }}>
-                <p style={{ fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: brand.isDark ? "rgba(255,255,255,0.28)" : "var(--muted)", marginBottom: 6 }}>Brand</p>
-                <h3 style={{ fontSize: "1.5rem", fontWeight: 900, letterSpacing: "-0.04em", color: brand.isDark ? "#fff" : "var(--foreground)", lineHeight: 1.1, marginBottom: 4 }}>{brand.name}</h3>
+                <p style={{ fontSize: "0.6rem", fontWeight: 600, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 6 }}>Brand</p>
+                <h3 style={{ fontSize: "1.5rem", fontWeight: 900, letterSpacing: "-0.04em", color: "var(--foreground)", lineHeight: 1.1, marginBottom: 4 }}>{brand.name}</h3>
                 <p style={{ fontSize: "0.8125rem", fontWeight: 600, color: brand.accent, letterSpacing: "-0.01em", marginBottom: 8 }}>{brand.tagline}</p>
-                <p style={{ fontSize: "0.8125rem", color: brand.isDark ? "rgba(255,255,255,0.38)" : "var(--muted)", letterSpacing: "-0.005em", lineHeight: 1.6, flex: 1, marginBottom: 16 }}>{brand.desc}</p>
+                <p style={{ fontSize: "0.8125rem", color: "var(--muted)", letterSpacing: "-0.005em", lineHeight: 1.6, flex: 1, marginBottom: 16 }}>{brand.desc}</p>
 
                 {/* Swatches */}
                 <div style={{ display: "flex", alignItems: "center", gap: 5, marginBottom: 16 }}>
                   {brand.colors.map(c => (
-                    <div key={c} style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: c, border: brand.isDark ? "1.5px solid rgba(255,255,255,0.12)" : "1.5px solid rgba(0,0,0,0.08)", flexShrink: 0 }} />
+                    <div key={c} style={{ width: 12, height: 12, borderRadius: "50%", backgroundColor: c, border: "1.5px solid rgba(0,0,0,0.08)", flexShrink: 0 }} />
                   ))}
-                  <span style={{ marginLeft: 4, fontSize: "0.65rem", color: brand.isDark ? "rgba(255,255,255,0.28)" : "var(--muted)", fontWeight: 500 }}>+12 colors</span>
+                  <span style={{ marginLeft: 4, fontSize: "0.65rem", color: "var(--muted)", fontWeight: 500 }}>+12 colors</span>
                 </div>
 
                 <a

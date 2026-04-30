@@ -4,7 +4,7 @@ import { useState, useRef } from "react";
 /* ── Category data ── */
 const CATEGORIES = [
   {
-    label: "Mobile Parts", icon: "chip", color: "#f97316",
+    label: "Mobile Parts", icon: "chip", color: "#6C63FF",
     sub: {
       title: "Trusted Mobile Parts",
       sections: [
@@ -164,7 +164,7 @@ function DesktopSidebar({ externalOpen, onRequestClose }: Props) {
         <div style={{
           height: 52, display: "flex", alignItems: "center", padding: "0 13px",
           flexShrink: 0, gap: 12,
-          background: isExpanded ? "linear-gradient(135deg,#f97316,#ea6308)" : "#fff",
+          background: isExpanded ? "linear-gradient(135deg,#6C63FF,#5a52d5)" : "#fff",
           borderBottom: isExpanded ? "none" : "1px solid #f0f0f0",
           transition: "background 0.25s",
         }}>
@@ -322,7 +322,7 @@ function MobileSidebar({ externalOpen, onRequestClose }: Props) {
             <div style={{
               display: "flex", alignItems: "center", justifyContent: "space-between",
               padding: "0 16px", height: 54, flexShrink: 0,
-              background: "linear-gradient(135deg,#f97316,#ea6308)",
+              background: "linear-gradient(135deg,#6C63FF,#5a52d5)",
             }}>
               <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
                 <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="#fff" strokeWidth={2.3}>
@@ -378,7 +378,7 @@ function MobileSidebar({ externalOpen, onRequestClose }: Props) {
             <div style={{
               display: "flex", alignItems: "center", gap: 10,
               padding: "0 14px", height: 54, flexShrink: 0,
-              borderBottom: `2px solid ${activeCat?.color ?? "#f97316"}`,
+              borderBottom: `2px solid ${activeCat?.color ?? "#6C63FF"}`,
             }}>
               <button onClick={goBack} style={{ width: 32, height: 32, borderRadius: 8, border: "1px solid #eee", backgroundColor: "#fff", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
                 <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#555" strokeWidth={2.3}>
@@ -423,11 +423,11 @@ function MobileSidebar({ externalOpen, onRequestClose }: Props) {
                         textDecoration: "none", fontSize: "0.875rem", color: "#333",
                         fontWeight: 500, transition: "background-color 0.12s, color 0.12s",
                       }}
-                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = `${activeCat?.color ?? "#f97316"}10`; (e.currentTarget as HTMLElement).style.color = activeCat?.color ?? "#f97316"; }}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = `${activeCat?.color ?? "#6C63FF"}10`; (e.currentTarget as HTMLElement).style.color = activeCat?.color ?? "#6C63FF"; }}
                       onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "transparent"; (e.currentTarget as HTMLElement).style.color = "#333"; }}
                     >
                       <span style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                        <span style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: `${activeCat?.color ?? "#f97316"}60`, flexShrink: 0, display: "inline-block" }}/>
+                        <span style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: `${activeCat?.color ?? "#6C63FF"}60`, flexShrink: 0, display: "inline-block" }}/>
                         {item}
                       </span>
                       <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="#ddd" strokeWidth={2.2}>

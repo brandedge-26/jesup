@@ -55,7 +55,7 @@ export default function CartSidebar({ isOpen, onClose }: Props) {
               height="20"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="#f97316"
+              stroke="#6C63FF"
               strokeWidth={2}
             >
               <path
@@ -71,7 +71,7 @@ export default function CartSidebar({ isOpen, onClose }: Props) {
               style={{
                 fontSize: "0.75rem",
                 color: "#fff",
-                backgroundColor: "#f97316",
+                backgroundColor: "#6C63FF",
                 borderRadius: 20,
                 padding: "1px 8px",
                 fontWeight: 700,
@@ -128,13 +128,13 @@ export default function CartSidebar({ isOpen, onClose }: Props) {
               width: 88,
               height: 88,
               borderRadius: "50%",
-              backgroundColor: "#fff7ed",
+              backgroundColor: "#f0eeff",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="#f97316" strokeWidth={1.5}>
+            <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="#6C63FF" strokeWidth={1.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
             </svg>
           </div>
@@ -153,7 +153,7 @@ export default function CartSidebar({ isOpen, onClose }: Props) {
             style={{
               padding: "11px 28px",
               borderRadius: 8,
-              backgroundColor: "#f97316",
+              backgroundColor: "#6C63FF",
               color: "#fff",
               border: "none",
               cursor: "pointer",
@@ -166,7 +166,7 @@ export default function CartSidebar({ isOpen, onClose }: Props) {
               ((e.currentTarget as HTMLElement).style.backgroundColor = "#ea6c0a")
             }
             onMouseLeave={(e) =>
-              ((e.currentTarget as HTMLElement).style.backgroundColor = "#f97316")
+              ((e.currentTarget as HTMLElement).style.backgroundColor = "#6C63FF")
             }
           >
             Continue Shopping
