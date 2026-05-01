@@ -58,11 +58,6 @@ const SUBJECTS = [
   "Other",
 ];
 
-const HOURS = [
-  { day: "Monday – Friday", time: "9:00 AM – 6:00 PM", open: true },
-  { day: "Saturday",        time: "10:00 AM – 4:00 PM", open: true },
-  { day: "Sunday",          time: "Closed",              open: false },
-];
 
 export default function ContactPage() {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -81,7 +76,8 @@ export default function ContactPage() {
     width: "100%", boxSizing: "border-box",
     padding: "11px 14px", fontSize: "0.875rem", fontFamily: "inherit",
     color: "#111", backgroundColor: "#fafafa",
-    border: "1.5px solid #e5e7eb", borderRadius: 10, outline: "none",
+    borderWidth: "1.5px", borderStyle: "solid", borderColor: "#e5e7eb",
+    borderRadius: 10, outline: "none",
     transition: "border-color 0.15s, box-shadow 0.15s",
   };
 
@@ -244,51 +240,49 @@ export default function ContactPage() {
                 {/* Right info column */}
                 <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
 
-                  {/* Office card — dark */}
-                  <div style={{ backgroundColor: "#0a0a0f", borderRadius: 20, padding: "1.75rem", position: "relative", overflow: "hidden" }}>
-                    <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(108,99,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(108,99,255,0.08) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
-                    <div style={{ position: "relative" }}>
-                      <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#fff", marginBottom: "1.25rem" }}>Our Office</h3>
-                      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
-                        <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
-                          <div style={{ width: 34, height: 34, borderRadius: 9, backgroundColor: "rgba(108,99,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke={PRIMARY} strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                          </div>
-                          <div>
-                            <p style={{ fontSize: "0.875rem", fontWeight: 600, color: "#fff" }}>123 Commerce Drive</p>
-                            <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.4)" }}>Jesup, GA 31545, United States</p>
-                          </div>
+                  {/* Trust stats */}
+                  <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.75rem" }}>
+                    {[
+                      { value: "< 1 day", label: "Response Time", icon: "M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" },
+                      { value: "10+ yrs", label: "In Business", icon: "M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" },
+                      { value: "5,000+", label: "Happy Clients", icon: "M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" },
+                      { value: "24/7", label: "Online Orders", icon: "M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" },
+                    ].map(s => (
+                      <div key={s.label} style={{ backgroundColor: "#fff", border: "1px solid #e5e7eb", borderRadius: 14, padding: "1.1rem 1rem", display: "flex", flexDirection: "column", gap: 6 }}>
+                        <div style={{ width: 32, height: 32, borderRadius: 8, backgroundColor: PRIMARY_LIGHT, display: "flex", alignItems: "center", justifyContent: "center" }}>
+                          <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke={PRIMARY} strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d={s.icon} /></svg>
                         </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                          <div style={{ width: 34, height: 34, borderRadius: 9, backgroundColor: "rgba(108,99,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke={PRIMARY} strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
-                          </div>
-                          <a href="tel:9124270000" style={{ fontSize: "0.875rem", fontWeight: 600, color: "#fff", textDecoration: "none" }}>+1 (912) 427-0000</a>
-                        </div>
-                        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                          <div style={{ width: 34, height: 34, borderRadius: 9, backgroundColor: "rgba(108,99,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke={PRIMARY} strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                          </div>
-                          <a href="mailto:support@jesupwireless.com" style={{ fontSize: "0.875rem", fontWeight: 600, color: "#fff", textDecoration: "none" }}>support@jesupwireless.com</a>
-                        </div>
+                        <p style={{ fontSize: "1.125rem", fontWeight: 800, color: "#111", letterSpacing: "-0.03em" }}>{s.value}</p>
+                        <p style={{ fontSize: "0.75rem", color: "#9ca3af", fontWeight: 500 }}>{s.label}</p>
                       </div>
-                    </div>
+                    ))}
                   </div>
 
-                  {/* Hours card */}
-                  <div style={{ backgroundColor: "#fff", border: "1px solid #e5e7eb", borderRadius: 20, padding: "1.75rem", boxShadow: "0 2px 12px rgba(0,0,0,0.04)" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "1.25rem" }}>
-                      <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke={PRIMARY} strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                      <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#111" }}>Business Hours</h3>
-                    </div>
-                    <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 8 }}>
-                      {HOURS.map(h => (
-                        <li key={h.day} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, padding: "10px 14px", borderRadius: 10, backgroundColor: "#f8fafc", border: "1px solid #f0f0f0" }}>
-                          <span style={{ fontSize: "0.8125rem", color: "#4b5563" }}>{h.day}</span>
-                          <span style={{ fontSize: "0.75rem", fontWeight: 600, padding: "3px 10px", borderRadius: 20, backgroundColor: h.open ? "#dcfce7" : "#fee2e2", color: h.open ? "#16a34a" : "#dc2626" }}>{h.time}</span>
-                        </li>
+                  {/* Preferred contact */}
+                  <div style={{ backgroundColor: "#fff", border: "1px solid #e5e7eb", borderRadius: 20, padding: "1.75rem" }}>
+                    <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#111", marginBottom: "1.25rem" }}>Preferred Contact</h3>
+                    <div style={{ display: "flex", flexDirection: "column", gap: "0.875rem" }}>
+                      {[
+                        { label: "Phone", value: "+1 (912) 427-0000", href: "tel:9124270000", icon: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" },
+                        { label: "Email", value: "support@jesupwireless.com", href: "mailto:support@jesupwireless.com", icon: "M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" },
+                        { label: "WhatsApp", value: "Chat instantly", href: "https://wa.me/19124270000", icon: "M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" },
+                      ].map(c => (
+                        <a key={c.label} href={c.href} target={c.href.startsWith("http") ? "_blank" : undefined} rel="noreferrer"
+                          style={{ display: "flex", alignItems: "center", gap: 12, padding: "10px 14px", borderRadius: 11, border: "1px solid #f0f0f4", textDecoration: "none", transition: "border-color 0.15s, background 0.15s" }}
+                          onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = PRIMARY; (e.currentTarget as HTMLElement).style.background = PRIMARY_LIGHT; }}
+                          onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#f0f0f4"; (e.currentTarget as HTMLElement).style.background = "transparent"; }}
+                        >
+                          <div style={{ width: 34, height: 34, borderRadius: 9, backgroundColor: PRIMARY_LIGHT, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                            <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke={PRIMARY} strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d={c.icon} /></svg>
+                          </div>
+                          <div>
+                            <p style={{ fontSize: "0.6875rem", fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.08em" }}>{c.label}</p>
+                            <p style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#111" }}>{c.value}</p>
+                          </div>
+                          <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#9ca3af" strokeWidth={2} style={{ marginLeft: "auto" }}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+                        </a>
                       ))}
-                    </ul>
+                    </div>
                   </div>
 
                   {/* Wholesale CTA */}

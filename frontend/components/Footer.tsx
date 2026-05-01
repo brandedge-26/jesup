@@ -75,12 +75,12 @@ export default function Footer() {
                 Exclusive deals, new launches &amp; restocks.
               </p>
             </div>
-            <div style={{ display: "flex", flex: "1 1 320px", maxWidth: 420 }}>
+            <div className="footer-nl-row" style={{ display: "flex", flex: "1 1 300px", maxWidth: 420, minWidth: 0 }}>
               <input
                 type="email"
                 placeholder="Enter your email address"
                 style={{
-                  flex: 1, padding: "11px 15px",
+                  flex: 1, minWidth: 0, padding: "11px 15px",
                   fontSize: "0.875rem", fontFamily: "inherit",
                   backgroundColor: "#fff",
                   border: "1.5px solid #e5e7eb", borderRight: "none",
@@ -92,7 +92,7 @@ export default function Footer() {
                 color: "#fff", backgroundColor: "#6C63FF",
                 border: "none", borderRadius: "0 10px 10px 0",
                 cursor: "pointer", whiteSpace: "nowrap",
-                transition: "background-color 0.15s",
+                transition: "background-color 0.15s", flexShrink: 0,
               }}
                 onMouseEnter={e => (e.currentTarget.style.backgroundColor = "#5a52d5")}
                 onMouseLeave={e => (e.currentTarget.style.backgroundColor = "#6C63FF")}

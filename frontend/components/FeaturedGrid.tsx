@@ -47,7 +47,7 @@ const ITEMS = [
 export default function FeaturedGrid() {
   return (
     <section style={{ backgroundColor: "var(--background)", padding: "2rem 0 3rem" }}>
-      <div style={{ padding: "0 20px" }}>
+      <div className="container-xl">
 
         {/* Header */}
         <div style={{ marginBottom: "1.5rem" }}>
@@ -58,11 +58,17 @@ export default function FeaturedGrid() {
             Shop by Collection
           </h2>
         </div>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: 14,
-        }}>
+        <div className="featured-grid-layout">
+          <style>{`
+            .featured-grid-layout {
+              display: grid;
+              grid-template-columns: repeat(2, 1fr);
+              gap: 14px;
+            }
+            @media (max-width: 420px) {
+              .featured-grid-layout { grid-template-columns: 1fr; }
+            }
+          `}</style>
           {ITEMS.map(item => (
             <a
               key={item.id}

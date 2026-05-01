@@ -209,11 +209,24 @@ export default function HeroSection() {
         </div>
       </div>
 
-      {/* ─── Info Strip ─── */}
-      <div style={{ backgroundColor: "#fff", borderBottom: "1px solid #e8edf3", overflowX: "auto", WebkitOverflowScrolling: "touch" }}>
-        <div style={{ display: "flex", alignItems: "center", height: 52, minWidth: "max-content", padding: "0 1.5rem" }}>
-          {INFO_ITEMS.map((item, i) => (
-            <div key={item.label} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 20px", borderRight: i < INFO_ITEMS.length - 1 ? "1px solid #eeeeee" : "none", flexShrink: 0 }}>
+      {/* ─── Marquee Info Strip ─── */}
+      <div style={{ backgroundColor: "#fff", borderBottom: "1px solid #e8edf3", overflow: "hidden", height: 52, display: "flex", alignItems: "center" }}>
+        <style>{`
+          @keyframes marquee-scroll {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+          }
+          .marquee-track {
+            display: flex;
+            align-items: center;
+            animation: marquee-scroll 28s linear infinite;
+            width: max-content;
+          }
+          .marquee-track:hover { animation-play-state: paused; }
+        `}</style>
+        <div className="marquee-track">
+          {[...INFO_ITEMS, ...INFO_ITEMS].map((item, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 28px", borderRight: "1px solid #eeeeee", flexShrink: 0 }}>
               <span style={{ color: item.color, display: "flex", flexShrink: 0 }}>{item.icon}</span>
               <span style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#333", whiteSpace: "nowrap" }}>{item.label}</span>
             </div>

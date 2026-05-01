@@ -4,176 +4,215 @@ import { useState } from "react";
 
 const PRODUCTS = [
   {
-    id: 1, brand: "Apple", name: "iPhone 15 Pro",
-    desc: "Titanium design, A17 Pro chip",
+    id: 1,
+    category: "Smartphone",
+    name: "iPhone 15 Pro",
+    desc: "Titanium design with A17 Pro chip and Action Button for ultimate control.",
     price: "$29.99",
-    tag: "Best Seller", tagColor: "#fff", tagBg: "#111", tagTextColor: "#fff",
+    originalPrice: "$39.99",
+    tag: "Best Seller",
+    tagColor: "#6C63FF",
+    tagBg: "#f0eeff",
+    rating: 4.9,
+    reviews: "2.4k",
     accent: "#6C63FF",
-    cardBg: "linear-gradient(145deg, #1a1a2e 0%, #16213e 100%)",
-    img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&h=500&fit=crop&q=85",
+    img: "https://images.unsplash.com/photo-1695048133142-1a20484d2569?w=600&h=600&fit=crop&q=85",
   },
   {
-    id: 2, brand: "Google", name: "Pixel 9 Pro",
-    desc: "Google AI camera, pure Android",
+    id: 2,
+    category: "Smartphone",
+    name: "Pixel 9 Pro",
+    desc: "Google AI camera system, pure Android experience and Tensor G4 chip.",
     price: "$24.99",
-    tag: "New", tagColor: "#fff", tagBg: "#6C63FF", tagTextColor: "#fff",
-    accent: "#6C63FF",
-    cardBg: "linear-gradient(145deg, #0f2027 0%, #203a43 100%)",
-    img: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&h=500&fit=crop&q=85",
+    originalPrice: "$34.99",
+    tag: "New",
+    tagColor: "#0284c7",
+    tagBg: "#e0f2fe",
+    rating: 4.7,
+    reviews: "1.1k",
+    accent: "#0284c7",
+    img: "https://images.unsplash.com/photo-1598327105666-5b89351aff97?w=600&h=600&fit=crop&q=85",
   },
   {
-    id: 3, brand: "Samsung", name: "Galaxy S25 Ultra",
-    desc: "S Pen, 200MP camera system",
+    id: 3,
+    category: "Smartphone",
+    name: "Galaxy S25 Ultra",
+    desc: "Built-in S Pen, 200MP camera system, and titanium frame design.",
     price: "$19.99",
-    tag: "Best Seller", tagColor: "#fff", tagBg: "#111", tagTextColor: "#fff",
-    accent: "#2563eb",
-    cardBg: "linear-gradient(145deg, #0a0a1a 0%, #1a1a3e 100%)",
-    img: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&h=500&fit=crop&q=85",
+    originalPrice: "$29.99",
+    tag: "Trending",
+    tagColor: "#d97706",
+    tagBg: "#fef3c7",
+    rating: 4.8,
+    reviews: "3.2k",
+    accent: "#d97706",
+    img: "https://images.unsplash.com/photo-1610945265064-0e34e5519bbf?w=600&h=600&fit=crop&q=85",
   },
   {
-    id: 4, brand: "Apple", name: "iPhone 14 Pro",
-    desc: "Dynamic Island, 48MP camera",
+    id: 4,
+    category: "Smartphone",
+    name: "iPhone 14 Pro",
+    desc: "Dynamic Island, Always-On display and a 48MP main camera system.",
     price: "$34.99",
-    tag: "Hot Deal", tagColor: "#fff", tagBg: "#ef4444", tagTextColor: "#fff",
-    accent: "#6b7280",
-    cardBg: "linear-gradient(145deg, #1a1a1a 0%, #2d2d2d 100%)",
-    img: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=600&h=500&fit=crop&q=85",
+    originalPrice: "$49.99",
+    tag: "Hot Deal",
+    tagColor: "#dc2626",
+    tagBg: "#fee2e2",
+    rating: 4.8,
+    reviews: "5.6k",
+    accent: "#dc2626",
+    img: "https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=600&h=600&fit=crop&q=85",
   },
 ];
 
+function StarRating({ rating }: { rating: number }) {
+  return (
+    <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
+      {[1, 2, 3, 4, 5].map(s => (
+        <svg key={s} width="11" height="11" viewBox="0 0 24 24"
+          fill={s <= Math.round(rating) ? "#f59e0b" : "none"}
+          stroke="#f59e0b" strokeWidth={2}>
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+        </svg>
+      ))}
+    </div>
+  );
+}
+
 function ProductCard({ p }: { p: typeof PRODUCTS[0] }) {
-  const [liked, setLiked] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   return (
-    <div style={{
-      flexShrink: 0,
-      width: 260,
-      borderRadius: 22,
-      overflow: "hidden",
-      backgroundColor: "#fff",
-      border: "1px solid #ebebeb",
-      boxShadow: "0 4px 24px rgba(0,0,0,0.08)",
-      cursor: "pointer",
-      transition: "transform 0.22s ease, box-shadow 0.22s ease",
-    }}
-      onMouseEnter={e => {
-        (e.currentTarget as HTMLElement).style.transform = "translateY(-5px)";
-        (e.currentTarget as HTMLElement).style.boxShadow = "0 16px 40px rgba(0,0,0,0.14)";
-      }}
-      onMouseLeave={e => {
-        (e.currentTarget as HTMLElement).style.transform = "";
-        (e.currentTarget as HTMLElement).style.boxShadow = "0 4px 24px rgba(0,0,0,0.08)";
+    <div
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      style={{
+        flexShrink: 0,
+        width: 272,
+        borderRadius: 20,
+        backgroundColor: "#fff",
+        border: "1px solid #e5e7eb",
+        cursor: "pointer",
+        display: "flex",
+        flexDirection: "column",
+        transform: hovered ? "translateY(-4px)" : "translateY(0)",
+        transition: "transform 0.28s cubic-bezier(0.22,1,0.36,1)",
+        overflow: "hidden",
       }}
     >
-
-      {/* ── Visual area ── */}
+      {/* Image area */}
       <div style={{
         position: "relative",
-        height: 220,
-        background: p.cardBg,
+        margin: "12px 12px 0",
+        height: 200,
+        borderRadius: 14,
+        backgroundColor: "#f8f8fb",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
         overflow: "hidden",
       }}>
         {/* Subtle radial glow */}
         <div style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          background: `radial-gradient(ellipse at 60% 50%, ${p.accent}25 0%, transparent 65%)`,
+          position: "absolute", inset: 0,
+          background: `radial-gradient(ellipse at 50% 60%, ${p.accent}18 0%, transparent 70%)`,
+          pointerEvents: "none",
         }} />
 
-        {/* Tag */}
+        {/* Tag badge */}
         <span style={{
-          position: "absolute", top: 14, left: 14, zIndex: 2,
+          position: "absolute", top: 12, left: 12, zIndex: 2,
+          fontSize: "0.625rem", fontWeight: 700, letterSpacing: "0.08em",
+          textTransform: "uppercase", color: p.tagColor,
           backgroundColor: p.tagBg,
-          color: p.tagTextColor,
-          fontSize: "0.5625rem", fontWeight: 700,
-          letterSpacing: "0.08em", textTransform: "uppercase",
-          padding: "5px 11px", borderRadius: 20,
+          padding: "4px 10px", borderRadius: 999,
         }}>
           {p.tag}
         </span>
 
-        {/* Heart */}
-        <button
-          onClick={e => { e.stopPropagation(); setLiked(v => !v); }}
-          style={{
-            position: "absolute", top: 12, right: 14, zIndex: 2,
-            width: 32, height: 32, borderRadius: "50%",
-            backgroundColor: "rgba(255,255,255,0.12)",
-            backdropFilter: "blur(6px)",
-            border: "1px solid rgba(255,255,255,0.18)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            cursor: "pointer",
-          }}
-        >
-          <svg width="15" height="15" viewBox="0 0 24 24"
-            fill={liked ? "#ef4444" : "none"}
-            stroke={liked ? "#ef4444" : "rgba(255,255,255,0.7)"}
-            strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round"
-              d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/>
-          </svg>
-        </button>
-
-        {/* Phone image */}
         <Image
           src={p.img}
           alt={p.name}
           fill
-          style={{
-            objectFit: "cover",
-            objectPosition: "center",
-            opacity: 0.88,
-          }}
+          style={{ objectFit: "cover", objectPosition: "center", opacity: 0.9 }}
         />
       </div>
 
-      {/* ── Info area ── */}
-      <div style={{
-        padding: "18px 20px 20px",
-        borderTop: "1px solid #f0f0f0",
-      }}>
-        <p style={{
-          fontSize: "0.625rem", fontWeight: 700,
-          letterSpacing: "0.12em", textTransform: "uppercase",
-          color: p.accent, marginBottom: 5,
-        }}>
-          {p.brand}
-        </p>
+      {/* Content */}
+      <div style={{ padding: "16px 18px 0", flex: 1, display: "flex", flexDirection: "column" }}>
+
+        {/* Category + rating row */}
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+          <span style={{
+            fontSize: "0.6875rem", fontWeight: 600, letterSpacing: "0.08em",
+            textTransform: "uppercase", color: p.accent,
+          }}>
+            {p.category}
+          </span>
+          <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+            <StarRating rating={p.rating} />
+            <span style={{ fontSize: "0.6875rem", color: "#9ca3af", fontWeight: 500 }}>({p.reviews})</span>
+          </div>
+        </div>
+
+        {/* Product name */}
         <h3 style={{
-          fontSize: "1rem", fontWeight: 800,
+          fontSize: "1.1rem", fontWeight: 800,
           color: "#111", letterSpacing: "-0.03em",
-          lineHeight: 1.25, marginBottom: 4,
+          lineHeight: 1.2, marginBottom: 8,
         }}>
           {p.name}
         </h3>
+
+        {/* Description */}
         <p style={{
-          fontSize: "0.75rem", color: "#9ca3af",
-          marginBottom: 14, lineHeight: 1.5,
+          fontSize: "0.78rem", color: "#9ca3af",
+          lineHeight: 1.6, marginBottom: 16, flex: 1,
         }}>
           {p.desc}
         </p>
+      </div>
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-          <div>
-            <p style={{ fontSize: "0.6rem", color: "#bbb", fontWeight: 500, marginBottom: 2 }}>Price</p>
-            <p style={{ fontSize: "1.0625rem", fontWeight: 800, color: "#111", letterSpacing: "-0.03em" }}>
+      {/* Bottom bar */}
+      <div style={{
+        display: "flex", alignItems: "center",
+        justifyContent: "space-between",
+        padding: "12px 18px 16px",
+        borderTop: "1px solid #f4f4f7",
+      }}>
+        {/* Price */}
+        <div>
+          <div style={{ display: "flex", alignItems: "baseline", gap: 6 }}>
+            <span style={{ fontSize: "1.125rem", fontWeight: 800, color: "#111", letterSpacing: "-0.03em" }}>
               {p.price}
-            </p>
+            </span>
+            <span style={{ fontSize: "0.75rem", color: "#c4c4cc", textDecoration: "line-through", fontWeight: 500 }}>
+              {p.originalPrice}
+            </span>
           </div>
-          <button style={{
-            padding: "10px 20px",
-            borderRadius: 12,
-            backgroundColor: "#111",
-            border: "none", color: "#fff",
-            fontSize: "0.8125rem", fontWeight: 700,
-            fontFamily: "inherit", cursor: "pointer",
-            transition: "background-color 0.15s",
-          }}
-            onMouseEnter={e => (e.currentTarget as HTMLElement).style.backgroundColor = "#333"}
-            onMouseLeave={e => (e.currentTarget as HTMLElement).style.backgroundColor = "#111"}
-          >
-            Buy Now
-          </button>
+          <span style={{ fontSize: "0.6875rem", color: "#16a34a", fontWeight: 600 }}>
+            Starting price
+          </span>
         </div>
+
+        {/* Shop now btn */}
+        <button
+          style={{
+            display: "flex", alignItems: "center", gap: 7,
+            padding: "7px 6px 7px 6px", borderRadius: 999,
+            backgroundColor: "#f0f2f8",
+            color: "#111", border: "1px solid #e2e5f0", cursor: "pointer",
+            fontSize: "0.8rem", fontWeight: 700, fontFamily: "inherit",
+            whiteSpace: "nowrap",
+          }}
+        >
+          <div style={{ width: 26, height: 26, borderRadius: "50%", backgroundColor: "#6C63FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2.5}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </div>
+          <span style={{ paddingRight: 8 }}>Shop Now</span>
+        </button>
       </div>
     </div>
   );
@@ -188,41 +227,48 @@ export default function NewArrivals() {
         <div style={{
           display: "flex", alignItems: "flex-end",
           justifyContent: "space-between",
-          marginBottom: "3rem", flexWrap: "wrap", gap: "1rem",
+          marginBottom: "2.5rem", flexWrap: "wrap", gap: "1rem",
         }}>
           <div>
-            <p style={{
-              fontSize: "0.6875rem", fontWeight: 600,
-              letterSpacing: "0.12em", textTransform: "uppercase",
-              color: "var(--accent)", marginBottom: "0.75rem",
-            }}>
-              Fresh Drops
-            </p>
-            <h2 style={{
-              fontSize: "clamp(1.75rem, 3vw, 2.5rem)", fontWeight: 800,
-              letterSpacing: "-0.04em", color: "var(--foreground)",
-              lineHeight: 1.1, marginBottom: "0.5rem",
-            }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "0.75rem" }}>
+              <div style={{ width: 6, height: 6, borderRadius: "50%", backgroundColor: "#6C63FF" }} />
+              <p style={{ fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: "#6C63FF" }}>
+                Fresh Drops
+              </p>
+            </div>
+            <h2 style={{ fontSize: "clamp(1.75rem, 3vw, 2.5rem)", fontWeight: 800, letterSpacing: "-0.04em", color: "var(--foreground)", lineHeight: 1.1, marginBottom: "0.5rem" }}>
               See What&apos;s New
             </h2>
             <p style={{ color: "var(--muted)", fontSize: "0.9375rem" }}>
               Latest arrivals from our top brands
             </p>
           </div>
-          <a href="#" style={{
-            display: "inline-flex", alignItems: "center", gap: 6,
-            fontSize: "0.875rem", fontWeight: 600,
-            color: "var(--accent)", textDecoration: "none", flexShrink: 0,
-          }}>
+          <a
+            href="#"
+            style={{
+              display: "inline-flex", alignItems: "center", gap: 8,
+              fontSize: "0.875rem", fontWeight: 700, color: "#111",
+              textDecoration: "none", flexShrink: 0,
+              padding: "10px 20px", borderRadius: 999,
+              border: "1.5px solid #e0e0e8",
+              backgroundColor: "#fff",
+              transition: "border-color 0.15s, color 0.15s",
+            }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = "#6C63FF"; (e.currentTarget as HTMLElement).style.color = "#6C63FF"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = "#e0e0e8"; (e.currentTarget as HTMLElement).style.color = "#111"; }}
+          >
             View All
-            <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
             </svg>
           </a>
         </div>
 
-        {/* Cards row */}
-        <div className="scrollbar-hide" style={{ display: "flex", gap: "1.25rem", overflowX: "auto", paddingBottom: 8 }}>
+        {/* Cards */}
+        <div
+          className="scrollbar-hide"
+          style={{ display: "flex", gap: "1.125rem", overflowX: "auto", paddingBottom: 12, paddingTop: 6 }}
+        >
           {PRODUCTS.map(p => <ProductCard key={p.id} p={p} />)}
         </div>
       </div>
