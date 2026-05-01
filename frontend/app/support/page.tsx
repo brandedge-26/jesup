@@ -8,40 +8,6 @@ import CategorySidebar from "@/components/CategorySidebar";
 const PRIMARY = "#6C63FF";
 const PRIMARY_LIGHT = "#f0eeff";
 
-const FAQS = [
-  {
-    q: "How do I track my order?",
-    a: "Once your order ships, you'll receive a confirmation email with a tracking number. You can use it on our Track Order page or the carrier's website to follow your package in real time.",
-  },
-  {
-    q: "What is your return policy?",
-    a: "We offer a 30-day hassle-free return policy on all unused, unopened items in original packaging. Simply contact our team and we'll arrange a return label for you.",
-  },
-  {
-    q: "How long does shipping take?",
-    a: "Standard shipping takes 3–7 business days. Expedited shipping (1–2 business days) is available at checkout. Wholesale orders may have different lead times.",
-  },
-  {
-    q: "Do you offer wholesale pricing?",
-    a: "Yes! We offer competitive wholesale pricing for bulk orders of 50+ units. Contact our sales team or fill out the wholesale form on our Contact page to get started.",
-  },
-  {
-    q: "My product arrived damaged. What do I do?",
-    a: "We're sorry to hear that. Please email us at support@jesupwireless.com with your order number and photos of the damage within 48 hours of delivery and we'll send a replacement right away.",
-  },
-  {
-    q: "Are your products covered by warranty?",
-    a: "All products carry at minimum a 90-day manufacturer warranty. Select brands like ZIZO offer up to 1-year coverage. Warranty details are listed on each product page.",
-  },
-  {
-    q: "Can I change or cancel my order?",
-    a: "Orders can be modified or cancelled within 2 hours of placement. After that, they enter our fulfilment pipeline. Contact us immediately via phone or WhatsApp for the fastest response.",
-  },
-  {
-    q: "What payment methods do you accept?",
-    a: "We accept all major credit/debit cards, PayPal, and bank transfers for wholesale accounts. All transactions are secured with SSL encryption.",
-  },
-];
 
 const CATEGORIES = [
   {
@@ -136,48 +102,6 @@ const CONTACT_OPTIONS = [
   },
 ];
 
-function FaqItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false);
-  return (
-    <div style={{
-      border: "1px solid #e5e7eb",
-      borderRadius: 14,
-      overflow: "hidden",
-      backgroundColor: "#fff",
-      transition: "border-color 0.15s",
-    }}>
-      <button
-        onClick={() => setOpen(v => !v)}
-        style={{
-          width: "100%", textAlign: "left",
-          display: "flex", alignItems: "center", justifyContent: "space-between",
-          gap: 16, padding: "18px 20px",
-          background: "none", border: "none", cursor: "pointer",
-          fontFamily: "inherit",
-        }}
-      >
-        <span style={{ fontSize: "0.9375rem", fontWeight: 600, color: "#111", lineHeight: 1.4 }}>{q}</span>
-        <div style={{
-          width: 28, height: 28, borderRadius: "50%", flexShrink: 0,
-          backgroundColor: open ? PRIMARY : "#f4f4f7",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          transition: "background-color 0.2s, transform 0.2s",
-          transform: open ? "rotate(45deg)" : "rotate(0deg)",
-        }}>
-          <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke={open ? "#fff" : "#555"} strokeWidth={2.5}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M12 4v16m8-8H4" />
-          </svg>
-        </div>
-      </button>
-      {open && (
-        <div style={{ padding: "0 20px 18px" }}>
-          <div style={{ width: 32, height: 2, backgroundColor: PRIMARY, borderRadius: 2, marginBottom: 12 }} />
-          <p style={{ fontSize: "0.875rem", color: "#6b7280", lineHeight: 1.75 }}>{a}</p>
-        </div>
-      )}
-    </div>
-  );
-}
 
 export default function SupportPage() {
   const [categoryOpen, setCategoryOpen] = useState(false);
@@ -185,33 +109,26 @@ export default function SupportPage() {
   const [searchFocused, setSearchFocused] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const filteredFaqs = FAQS.filter(f =>
-    f.q.toLowerCase().includes(search.toLowerCase()) ||
-    f.a.toLowerCase().includes(search.toLowerCase())
-  );
-
   const filteredCats = CATEGORIES.filter(c =>
     search === "" || c.title.toLowerCase().includes(search.toLowerCase()) || c.desc.toLowerCase().includes(search.toLowerCase())
   );
 
-  const showDropdown = dropdownOpen && (search.length > 0 || searchFocused);
+  const showDropdown = dropdownOpen && searchFocused;
 
   return (
     <>
       <style>{`
-        .sup-cats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .sup-cats { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; }
         .sup-contact { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
-        .sup-layout { display: grid; grid-template-columns: 1fr 340px; gap: 2.5rem; align-items: start; }
-        .sup-cat-card { position: relative; display: flex; align-items: flex-start; gap: 14px; padding: 18px; background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; text-decoration: none; cursor: pointer; transition: border-color 0.15s, transform 0.18s; overflow: hidden; min-height: 100px; }
-        .sup-cat-card:hover { border-color: ${PRIMARY}; transform: translateY(-2px); }
+        .sup-cat-card { position: relative; display: flex; align-items: flex-start; gap: 14px; padding: 18px; border-radius: 16px; text-decoration: none; cursor: pointer; transition: border-color 0.15s, transform 0.18s; overflow: hidden; min-height: 100px; }
+        .sup-cat-card:hover { transform: translateY(-2px); }
         .sup-contact-card { display: flex; align-items: center; gap: 14px; padding: 18px; background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; text-decoration: none; transition: border-color 0.15s; }
         .sup-contact-card:hover { border-color: ${PRIMARY}; }
         @media (max-width: 900px) {
           .sup-layout { grid-template-columns: 1fr; }
-          .sup-cats { grid-template-columns: repeat(2, 1fr); }
           .sup-contact { grid-template-columns: 1fr; }
         }
-        @media (max-width: 540px) {
+        @media (max-width: 580px) {
           .sup-cats { grid-template-columns: 1fr; }
         }
       `}</style>
@@ -247,18 +164,17 @@ export default function SupportPage() {
 
                 {/* Glassmorphism search wrapper */}
                 <div style={{ position: "relative", maxWidth: 540, margin: "0 auto" }}>
+                  {/* Search bar — always pill shaped */}
                   <div style={{
                     display: "flex", alignItems: "center",
                     background: "rgba(255,255,255,0.10)",
                     backdropFilter: "blur(20px)",
                     WebkitBackdropFilter: "blur(20px)",
-                    border: `1px solid ${dropdownOpen ? "rgba(108,99,255,0.6)" : "rgba(255,255,255,0.18)"}`,
-                    borderRadius: dropdownOpen ? "18px 18px 0 0" : 999,
-                    padding: "6px 6px 6px 20px",
-                    boxShadow: dropdownOpen
-                      ? "0 0 0 3px rgba(108,99,255,0.2), 0 8px 32px rgba(0,0,0,0.3)"
-                      : "0 8px 32px rgba(0,0,0,0.3)",
-                    transition: "border-color 0.2s, box-shadow 0.2s, border-radius 0.15s",
+                    border: `1px solid ${searchFocused ? "rgba(108,99,255,0.6)" : "rgba(255,255,255,0.18)"}`,
+                    borderRadius: 999,
+                    padding: "7px 7px 7px 20px",
+                    boxShadow: searchFocused ? "0 0 0 3px rgba(108,99,255,0.18), 0 8px 32px rgba(0,0,0,0.3)" : "0 8px 32px rgba(0,0,0,0.3)",
+                    transition: "border-color 0.2s, box-shadow 0.2s",
                   }}>
                     <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.5)" strokeWidth={2.2} style={{ flexShrink: 0, marginRight: 10 }}>
                       <circle cx="11" cy="11" r="8" /><path strokeLinecap="round" d="M21 21l-4.35-4.35" />
@@ -267,112 +183,72 @@ export default function SupportPage() {
                       type="text"
                       placeholder="Search for answers…"
                       value={search}
-                      onChange={e => setSearch(e.target.value)}
+                      onChange={e => { setSearch(e.target.value); setDropdownOpen(e.target.value.trim().length > 0); }}
                       onFocus={() => { setSearchFocused(true); setDropdownOpen(true); }}
                       onBlur={() => { setSearchFocused(false); setTimeout(() => setDropdownOpen(false), 180); }}
-                      style={{
-                        flex: 1, border: "none", outline: "none",
-                        fontSize: "0.9375rem", color: "#fff",
-                        backgroundColor: "transparent", fontFamily: "inherit",
-                      }}
+                      style={{ flex: 1, border: "none", outline: "none", fontSize: "0.9375rem", color: "#fff", backgroundColor: "transparent", fontFamily: "inherit" }}
                     />
                     {search && (
-                      <button onClick={() => setSearch("")} style={{ background: "none", border: "none", cursor: "pointer", padding: "0 6px", color: "rgba(255,255,255,0.4)", display: "flex", alignItems: "center" }}>
-                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
+                      <button
+                        onMouseDown={e => e.preventDefault()}
+                        onClick={() => { setSearch(""); setDropdownOpen(false); }}
+                        style={{ background: "none", border: "none", cursor: "pointer", padding: "0 8px", color: "rgba(255,255,255,0.45)", display: "flex", alignItems: "center" }}
+                      >
+                        <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
                       </button>
                     )}
-                    <button style={{
-                      display: "flex", alignItems: "center", justifyContent: "center",
-                      width: 40, height: 40, borderRadius: "50%",
-                      backgroundColor: PRIMARY, border: "none", cursor: "pointer", flexShrink: 0,
-                    }}>
+                    <button style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 40, height: 40, borderRadius: "50%", backgroundColor: PRIMARY, border: "none", cursor: "pointer", flexShrink: 0 }}>
                       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                       </svg>
                     </button>
                   </div>
 
-                  {/* YouTube-style dropdown */}
-                  {showDropdown && (
+                  {/* Dropdown — 10px gap, 6 category titles only */}
+                  {showDropdown && filteredCats.length > 0 && (
                     <div style={{
-                      position: "absolute", top: "100%", left: 0, right: 0, zIndex: 50,
-                      background: "rgba(18,18,28,0.92)",
-                      backdropFilter: "blur(24px)",
-                      WebkitBackdropFilter: "blur(24px)",
-                      border: "1px solid rgba(108,99,255,0.4)",
-                      borderTop: "1px solid rgba(255,255,255,0.06)",
-                      borderRadius: "0 0 18px 18px",
-                      overflow: "hidden",
-                      boxShadow: "0 16px 40px rgba(0,0,0,0.4)",
+                      position: "absolute", top: "calc(100% + 10px)", left: 0, right: 0, zIndex: 50,
+                      background: "rgba(18,16,32,0.96)",
+                      backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      borderRadius: 14, overflow: "hidden",
+                      boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
                     }}>
-                      {/* Categories section */}
-                      {filteredCats.length > 0 && (
-                        <>
-                          <div style={{ padding: "10px 16px 6px", display: "flex", alignItems: "center", gap: 6 }}>
-                            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.3)" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" /></svg>
-                            <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>Browse Topics</span>
-                          </div>
-                          {filteredCats.slice(0, 4).map(c => (
-                            <a key={c.title} href="#faq" onClick={() => { setSearch(c.title); setDropdownOpen(false); }} style={{
-                              display: "flex", alignItems: "center", gap: 12,
-                              padding: "10px 16px", textDecoration: "none",
-                              transition: "background 0.12s", cursor: "pointer",
-                            }}
-                              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "rgba(108,99,255,0.12)"}
-                              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "transparent"}
-                            >
-                              <div style={{ width: 30, height: 30, borderRadius: 8, backgroundColor: c.bg + "22", border: `1px solid ${c.color}33`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                                <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke={c.color} strokeWidth={1.8}>
-                                  <path strokeLinecap="round" strokeLinejoin="round" d={c.icon} />
-                                </svg>
-                              </div>
-                              <div style={{ flex: 1, textAlign: "left" }}>
-                                <p style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#fff" }}>{c.title}</p>
-                                <p style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.35)" }}>{c.desc}</p>
-                              </div>
-                              <span style={{ fontSize: "0.65rem", fontWeight: 700, color: c.color, backgroundColor: c.color + "22", padding: "2px 8px", borderRadius: 999 }}>{c.count} articles</span>
-                            </a>
-                          ))}
-                        </>
-                      )}
-
-                      {/* FAQ matches */}
-                      {search && filteredFaqs.length > 0 && (
-                        <>
-                          <div style={{ padding: "10px 16px 6px", borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", gap: 6 }}>
-                            <svg width="11" height="11" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.3)" strokeWidth={2}><circle cx="11" cy="11" r="8"/><path strokeLinecap="round" d="M21 21l-4.35-4.35"/></svg>
-                            <span style={{ fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(255,255,255,0.3)" }}>Related Questions</span>
-                          </div>
-                          {filteredFaqs.slice(0, 3).map((f, i) => (
-                            <a key={i} href="#faq" onClick={() => { setDropdownOpen(false); }} style={{
-                              display: "flex", alignItems: "center", gap: 12,
-                              padding: "10px 16px", textDecoration: "none", cursor: "pointer",
-                              transition: "background 0.12s",
-                            }}
-                              onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "rgba(108,99,255,0.12)"}
-                              onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "transparent"}
-                            >
-                              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.35)" strokeWidth={2} style={{ flexShrink: 0 }}>
-                                <circle cx="11" cy="11" r="8"/><path strokeLinecap="round" d="M21 21l-4.35-4.35"/>
+                      <div style={{ padding: "6px 8px" }}>
+                        {filteredCats.map(c => (
+                          <a
+                            key={c.title}
+                            href="/faq"
+                            onMouseDown={e => e.preventDefault()}
+                            onClick={() => setDropdownOpen(false)}
+                            style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "10px 12px", borderRadius: 10, textDecoration: "none", cursor: "pointer", transition: "background 0.12s" }}
+                            onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.06)"}
+                            onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "transparent"}
+                          >
+                            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.55)" strokeWidth={2} style={{ flexShrink: 0 }}>
+                                <circle cx="11" cy="11" r="8" /><path strokeLinecap="round" d="M21 21l-4.35-4.35" />
                               </svg>
-                              <span style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.75)", textAlign: "left" }}>{f.q}</span>
-                            </a>
-                          ))}
-                        </>
-                      )}
-
-                      {/* No results */}
-                      {search && filteredCats.length === 0 && filteredFaqs.length === 0 && (
-                        <div style={{ padding: "20px 16px", textAlign: "center", color: "rgba(255,255,255,0.3)", fontSize: "0.8125rem" }}>
-                          No results for &quot;{search}&quot;
-                        </div>
-                      )}
-
-                      <div style={{ padding: "8px 16px 10px", borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
-                        <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.25)", fontWeight: 500 }}>Press Enter to search all results</span>
+                              <span style={{ fontSize: "0.875rem", fontWeight: 500, color: "rgba(255,255,255,0.85)" }}>{c.title}</span>
+                            </div>
+                            <svg width="12" height="12" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.3)" strokeWidth={2} style={{ flexShrink: 0 }}>
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                            </svg>
+                          </a>
+                        ))}
                       </div>
+                    </div>
+                  )}
+
+                  {/* No match hint */}
+                  {showDropdown && search.trim() && filteredCats.length === 0 && (
+                    <div style={{
+                      position: "absolute", top: "calc(100% + 10px)", left: 0, right: 0, zIndex: 50,
+                      background: "rgba(18,16,32,0.96)", backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+                      border: "1px solid rgba(255,255,255,0.1)", borderRadius: 14, padding: "16px 18px",
+                      textAlign: "center", boxShadow: "0 12px 40px rgba(0,0,0,0.5)",
+                    }}>
+                      <p style={{ fontSize: "0.875rem", color: "rgba(255,255,255,0.4)" }}>No topics matched &quot;{search}&quot;</p>
                     </div>
                   )}
                 </div>
@@ -409,7 +285,7 @@ export default function SupportPage() {
               </div>
               <div className="sup-cats">
                 {CATEGORIES.map(c => (
-                  <a key={c.title} href="#faq" className="sup-cat-card">
+                  <a key={c.title} href="#faq" className="sup-cat-card" style={{ backgroundColor: c.bg, border: `1px solid ${c.color}30` }}>
                     {/* Floating image — right side like FeaturedGrid */}
                     <div style={{
                       position: "absolute",
@@ -421,10 +297,10 @@ export default function SupportPage() {
                     }}>
                       <Image src={c.img} alt={c.title} fill style={{ objectFit: "cover" }} />
                     </div>
-                    {/* Gradient fade so text stays readable */}
+                    {/* Gradient fade so text stays readable — uses card bg color */}
                     <div style={{
                       position: "absolute", inset: 0,
-                      background: `linear-gradient(to right, #fff 55%, transparent 90%)`,
+                      background: `linear-gradient(to right, ${c.bg} 55%, transparent 90%)`,
                       pointerEvents: "none", zIndex: 1,
                     }} />
 
@@ -447,105 +323,46 @@ export default function SupportPage() {
             </div>
           </div>
 
-          {/* ── FAQ + Contact sidebar ── */}
-          <div style={{ backgroundColor: "#fff", padding: "3.5rem 0 5rem" }}>
-            <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 20px" }}>
-              <div className="sup-layout">
-
-                {/* FAQ list */}
-                <div id="faq">
-                  <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "1.5rem", flexWrap: "wrap", gap: 12 }}>
-                    <div>
-                      <p style={{ fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: PRIMARY, marginBottom: "0.4rem" }}>FAQ</p>
-                      <h2 style={{ fontSize: "clamp(1.3rem, 2.5vw, 1.75rem)", fontWeight: 800, color: "#111", letterSpacing: "-0.04em" }}>
-                        Frequently Asked Questions
-                      </h2>
-                    </div>
-                    {search && (
-                      <span style={{ fontSize: "0.8125rem", color: "#9ca3af" }}>
-                        {filteredFaqs.length} result{filteredFaqs.length !== 1 ? "s" : ""} for &quot;{search}&quot;
-                      </span>
-                    )}
+          {/* ── View all FAQs banner ── */}
+          <div style={{ backgroundColor: "#f8fafc", padding: "3rem 1.5rem" }}>
+            <div style={{ maxWidth: 1100, margin: "0 auto" }}>
+              <div style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                flexWrap: "wrap", gap: 24,
+                backgroundColor: "#fff", border: "1px solid #e5e7eb",
+                borderRadius: 20, padding: "2rem 2.5rem",
+              }}>
+                {/* Left */}
+                <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
+                  <div style={{ width: 52, height: 52, borderRadius: 14, backgroundColor: PRIMARY_LIGHT, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                    <svg width="24" height="24" fill="none" viewBox="0 0 24 24" stroke={PRIMARY} strokeWidth={1.8}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
                   </div>
-
-                  <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
-                    {filteredFaqs.length > 0 ? filteredFaqs.map((f, i) => (
-                      <FaqItem key={i} q={f.q} a={f.a} />
-                    )) : (
-                      <div style={{ textAlign: "center", padding: "3rem 1rem", color: "#9ca3af" }}>
-                        <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke="#d1d5db" strokeWidth={1.5} style={{ marginBottom: 12 }}>
-                          <circle cx="11" cy="11" r="8" /><path strokeLinecap="round" d="M21 21l-4.35-4.35" />
-                        </svg>
-                        <p style={{ fontWeight: 600, color: "#374151", marginBottom: 4 }}>No results found</p>
-                        <p style={{ fontSize: "0.875rem" }}>Try different keywords or contact our team directly.</p>
-                      </div>
-                    )}
+                  <div>
+                    <p style={{ fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: PRIMARY, marginBottom: 4 }}>Knowledge Base</p>
+                    <h2 style={{ fontSize: "1.125rem", fontWeight: 800, color: "#111", letterSpacing: "-0.03em", marginBottom: 4 }}>Have more questions?</h2>
+                    <p style={{ fontSize: "0.875rem", color: "#9ca3af" }}>Browse our full FAQ with 40+ answers across 7 categories.</p>
                   </div>
                 </div>
-
-                {/* Right: still need help + status */}
-                <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
-
-                  {/* Still need help card */}
-                  <div style={{ backgroundColor: "#0a0a0f", borderRadius: 20, padding: "1.75rem", position: "relative", overflow: "hidden" }}>
-                    <div style={{ position: "absolute", inset: 0, pointerEvents: "none", backgroundImage: "linear-gradient(rgba(108,99,255,0.08) 1px, transparent 1px), linear-gradient(90deg, rgba(108,99,255,0.08) 1px, transparent 1px)", backgroundSize: "32px 32px" }} />
-                    <div style={{ position: "relative" }}>
-                      <div style={{ width: 40, height: 40, borderRadius: 12, backgroundColor: "rgba(108,99,255,0.15)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1rem" }}>
-                        <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke={PRIMARY} strokeWidth={1.8}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z" />
-                        </svg>
-                      </div>
-                      <h3 style={{ fontSize: "1rem", fontWeight: 700, color: "#fff", marginBottom: 6 }}>Still need help?</h3>
-                      <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.65, marginBottom: "1.25rem" }}>
-                        Our support team is available Monday to Friday, 9 AM – 6 PM. We typically respond within a few hours.
-                      </p>
-                      <a href="/contact" style={{
-                        display: "inline-flex", alignItems: "center", gap: 8,
-                        padding: "10px 18px", borderRadius: 999,
-                        backgroundColor: PRIMARY, color: "#fff",
-                        fontSize: "0.875rem", fontWeight: 700, textDecoration: "none",
-                        transition: "background 0.15s",
-                      }}>
-                        Contact Support
-                        <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                        </svg>
-                      </a>
-                    </div>
-                  </div>
-
-                  {/* System status card */}
-                  <div style={{ backgroundColor: "#fff", border: "1px solid #e5e7eb", borderRadius: 20, padding: "1.5rem" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: "1rem" }}>
-                      <div style={{ width: 8, height: 8, borderRadius: "50%", backgroundColor: "#16a34a", boxShadow: "0 0 0 3px #dcfce7" }} />
-                      <h3 style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#111" }}>All Systems Operational</h3>
-                    </div>
-                    {[
-                      { label: "Website", status: "Operational" },
-                      { label: "Order Processing", status: "Operational" },
-                      { label: "Payment Gateway", status: "Operational" },
-                      { label: "Email Notifications", status: "Operational" },
-                    ].map(s => (
-                      <div key={s.label} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "9px 0", borderTop: "1px solid #f4f4f7" }}>
-                        <span style={{ fontSize: "0.8125rem", color: "#4b5563" }}>{s.label}</span>
-                        <span style={{ fontSize: "0.75rem", fontWeight: 600, color: "#16a34a", backgroundColor: "#f0fdf4", padding: "2px 10px", borderRadius: 999 }}>{s.status}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Avg response time */}
-                  <div style={{ backgroundColor: PRIMARY_LIGHT, border: `1px solid rgba(108,99,255,0.15)`, borderRadius: 20, padding: "1.25rem 1.5rem", display: "flex", alignItems: "center", gap: 14 }}>
-                    <div style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: "#fff", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
-                      <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke={PRIMARY} strokeWidth={1.8}>
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <p style={{ fontSize: "0.75rem", color: PRIMARY, fontWeight: 600, marginBottom: 2 }}>Avg. Response Time</p>
-                      <p style={{ fontSize: "1.125rem", fontWeight: 800, color: "#111", letterSpacing: "-0.03em" }}>Under 4 hours</p>
-                    </div>
-                  </div>
-                </div>
+                {/* Right */}
+                <a
+                  href="/faq"
+                  style={{
+                    display: "inline-flex", alignItems: "center", gap: 10,
+                    padding: "12px 24px", borderRadius: 999,
+                    backgroundColor: PRIMARY, color: "#fff",
+                    fontSize: "0.9375rem", fontWeight: 700, textDecoration: "none",
+                    flexShrink: 0, transition: "background 0.15s",
+                  }}
+                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.backgroundColor = "#5a52d5"}
+                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.backgroundColor = PRIMARY}
+                >
+                  View all FAQs
+                  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+                  </svg>
+                </a>
               </div>
             </div>
           </div>

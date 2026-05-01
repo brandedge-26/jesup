@@ -375,7 +375,7 @@ const NAV_LINKS = [
   { label: "Support Centre", href: "/support" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact Us", href: "/contact" },
-  { label: "Repair Services", href: "#" },
+  { label: "Repair Services", href: "/repair" },
 ];
 
 const SEARCH_CATEGORIES = [
@@ -404,7 +404,7 @@ function SearchBar({ slim, searchFocused, searchValue, onFocus, onBlur, onChange
         backgroundColor: "#fff",
         border: "1.5px solid #e8e8f0",
         borderRadius: 10,
-        margin: "0 50px",
+        margin: slim ? 0 : "0 50px",
         padding: "0 6px 0 18px",
         boxShadow: searchFocused ? "0 0 0 3px rgba(108,99,255,0.15)" : "none",
         transition: "box-shadow 0.18s",
@@ -562,23 +562,30 @@ export default function Navbar({ onCategoryToggle }: Props) {
           <button
             onClick={() => setCartOpen(true)}
             style={{
-              position: "relative", width: 36, height: 36, borderRadius: 10,
-              backgroundColor: "#6C63FF", border: "none", cursor: "pointer",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              flexShrink: 0,
+              position: "relative", display: "flex", alignItems: "center", gap: 8,
+              padding: "3px 12px 3px 3px", height: 36, borderRadius: 999,
+              backgroundColor: "#f0f2f8", color: "#111",
+              border: "1px solid #e2e5f0", cursor: "pointer",
+              fontSize: "0.8rem", fontWeight: 600, flexShrink: 0,
+              transition: "background-color 0.14s, border-color 0.14s",
             }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#e6e9f5"; (e.currentTarget as HTMLElement).style.borderColor = "#c7cde8"; }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#f0f2f8"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e5f0"; }}
           >
-            <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-            <span style={{
-              position: "absolute", top: -4, right: -4,
-              width: 16, height: 16, borderRadius: "50%",
-              backgroundColor: "#fff", color: "#6C63FF",
-              fontSize: "0.5rem", fontWeight: 900,
-              display: "flex", alignItems: "center", justifyContent: "center",
-              border: "1.5px solid #6C63FF",
-            }}>0</span>
+            <div style={{ width: 30, height: 30, borderRadius: "50%", backgroundColor: "#6C63FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative" }}>
+              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              <span style={{
+                position: "absolute", top: -4, right: -4,
+                width: 14, height: 14, borderRadius: "50%",
+                backgroundColor: "#fff", color: "#6C63FF",
+                fontSize: "0.45rem", fontWeight: 900,
+                display: "flex", alignItems: "center", justifyContent: "center",
+                border: "1.5px solid #6C63FF",
+              }}>0</span>
+            </div>
+            Cart
           </button>
         </div>
 
@@ -679,60 +686,85 @@ export default function Navbar({ onCategoryToggle }: Props) {
               {NAV_LINKS.map((link) => {
                 const active = link.href !== "#" && pathname === link.href;
                 return (
-                <li key={link.label}>
-                  <a
-                    href={link.href}
-                    style={{
-                      display: "flex", alignItems: "center",
-                      padding: "0 14px", height: 42, borderRadius: 999,
-                      fontSize: "0.875rem",
-                      fontWeight: active ? 700 : 500,
-                      color: active ? "#6C63FF" : "#444",
-                      backgroundColor: active ? "rgba(108,99,255,0.09)" : "transparent",
-                      border: active ? "1px solid rgba(108,99,255,0.2)" : "1px solid transparent",
-                      textDecoration: "none",
-                      transition: "background-color 0.14s, color 0.14s, border-color 0.14s",
-                      whiteSpace: "nowrap",
-                    }}
-                    onMouseEnter={e => { if (!active) { (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(108,99,255,0.07)"; (e.currentTarget as HTMLElement).style.color = "#6C63FF"; } }}
-                    onMouseLeave={e => { if (!active) { (e.currentTarget as HTMLElement).style.backgroundColor = "transparent"; (e.currentTarget as HTMLElement).style.color = "#444"; } }}
-                  >
-                    {link.label}
-                  </a>
-                </li>
+                  <li key={link.label}>
+                    <a
+                      href={link.href}
+                      style={{
+                        display: "flex", alignItems: "center",
+                        padding: "0 14px", height: 42, borderRadius: 999,
+                        fontSize: "0.875rem",
+                        fontWeight: active ? 700 : 500,
+                        color: active ? "#6C63FF" : "#444",
+                        backgroundColor: active ? "rgba(108,99,255,0.09)" : "transparent",
+                        border: active ? "1px solid rgba(108,99,255,0.2)" : "1px solid transparent",
+                        textDecoration: "none",
+                        transition: "background-color 0.14s, color 0.14s, border-color 0.14s",
+                        whiteSpace: "nowrap",
+                      }}
+                      onMouseEnter={e => { if (!active) { (e.currentTarget as HTMLElement).style.backgroundColor = "rgba(108,99,255,0.07)"; (e.currentTarget as HTMLElement).style.color = "#6C63FF"; } }}
+                      onMouseLeave={e => { if (!active) { (e.currentTarget as HTMLElement).style.backgroundColor = "transparent"; (e.currentTarget as HTMLElement).style.color = "#444"; } }}
+                    >
+                      {link.label}
+                    </a>
+                  </li>
                 );
               })}
             </ul>
 
-            {/* Cart */}
-            <button
-              onClick={() => setCartOpen(true)}
-              style={{
-                position: "relative", display: "flex", alignItems: "center", gap: 10,
-                padding: "5px 16px 5px 5px", height: 42, borderRadius: 999,
-                backgroundColor: "#f0f2f8", color: "#111",
-                border: "1px solid #e2e5f0", cursor: "pointer",
-                fontSize: "0.875rem", fontWeight: 600, flexShrink: 0,
-                transition: "background-color 0.14s, border-color 0.14s",
-              }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#e6e9f5"; (e.currentTarget as HTMLElement).style.borderColor = "#c7cde8"; }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#f0f2f8"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e5f0"; }}
-            >
-              <div style={{ width: 32, height: 32, borderRadius: "50%", backgroundColor: "#6C63FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative" }}>
-                <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-                </svg>
-                <span style={{
-                  position: "absolute", top: -4, right: -4,
-                  width: 15, height: 15, borderRadius: "50%",
-                  backgroundColor: "#fff", color: "#6C63FF",
-                  fontSize: "0.45rem", fontWeight: 900,
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  border: "1.5px solid #6C63FF",
-                }}>0</span>
-              </div>
-              Cart
-            </button>
+            {/* Cart + Login — pushed to far right */}
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginLeft: "auto" }}>
+              <button
+                onClick={() => setCartOpen(true)}
+                style={{
+                  position: "relative", display: "flex", alignItems: "center", gap: 10,
+                  padding: "5px 16px 5px 5px", height: 42, borderRadius: 999,
+                  backgroundColor: "#f0f2f8", color: "#111",
+                  border: "1px solid #e2e5f0", cursor: "pointer",
+                  fontSize: "0.875rem", fontWeight: 600, flexShrink: 0,
+                  transition: "background-color 0.14s, border-color 0.14s",
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#e6e9f5"; (e.currentTarget as HTMLElement).style.borderColor = "#c7cde8"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#f0f2f8"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e5f0"; }}
+              >
+                <div style={{ width: 32, height: 32, borderRadius: "50%", backgroundColor: "#6C63FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative" }}>
+                  <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                  </svg>
+                  <span style={{
+                    position: "absolute", top: -4, right: -4,
+                    width: 15, height: 15, borderRadius: "50%",
+                    backgroundColor: "#fff", color: "#6C63FF",
+                    fontSize: "0.45rem", fontWeight: 900,
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    border: "1.5px solid #6C63FF",
+                  }}>0</span>
+                </div>
+                Cart
+              </button>
+
+              {/* Login */}
+              <a
+                href="/login"
+                style={{
+                  display: "flex", alignItems: "center", gap: 10,
+                  padding: "5px 16px 5px 5px", height: 42, borderRadius: 999,
+                  backgroundColor: "#f0f2f8", color: "#111",
+                  border: "1px solid #e2e5f0",
+                  fontSize: "0.875rem", fontWeight: 600, flexShrink: 0,
+                  textDecoration: "none",
+                  transition: "background-color 0.14s, border-color 0.14s",
+                }}
+                onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#e6e9f5"; (e.currentTarget as HTMLElement).style.borderColor = "#c7cde8"; }}
+                onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#f0f2f8"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e5f0"; }}
+              >
+                <div style={{ width: 32, height: 32, borderRadius: "50%", backgroundColor: "#6C63FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <svg width="15" height="15" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                </div>
+                Login
+              </a>
+            </div>
           </div>
         </div>
       </header>
