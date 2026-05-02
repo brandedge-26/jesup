@@ -1,5 +1,6 @@
 // "use client";
 // import { useState, useRef, useEffect } from "react";
+// import Link from "next/link";
 // // useRef retained for transitioning ref below
 // import CartSidebar from "./CartSidebar";
 
@@ -368,10 +369,12 @@
 import { useState, useRef, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import CartSidebar from "./CartSidebar";
+import Link from "next/link";
+import { useCartStore } from "@/store/cartStore";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
-  { label: "Store", href: "#" },
+  { label: "Store", href: "/shop" },
   { label: "Support Centre", href: "/support" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact Us", href: "/contact" },
@@ -465,6 +468,7 @@ export default function Navbar({ onCategoryToggle }: Props) {
   const [headerState, setHeaderState] = useState<"full" | "compact" | "hidden">("full");
   const lastScrollY = useRef(0);
   const transitioning = useRef(false);
+  const cartCount = useCartStore((s) => s.cartCount());
 
   useEffect(() => {
     const onScroll = () => {
@@ -545,7 +549,7 @@ export default function Navbar({ onCategoryToggle }: Props) {
           </button>
 
           {/* Logo — absolutely centered */}
-          <a
+          <Link
             href="/"
             style={{
               position: "absolute", left: "50%", transform: "translateX(-50%)",
@@ -556,7 +560,7 @@ export default function Navbar({ onCategoryToggle }: Props) {
               <span style={{ color: "#111" }}>Jes</span>
               <span style={{ color: "#6C63FF" }}>up</span>
             </span>
-          </a>
+          </Link>
 
           {/* Cart */}
           <button
@@ -583,7 +587,7 @@ export default function Navbar({ onCategoryToggle }: Props) {
                 fontSize: "0.45rem", fontWeight: 900,
                 display: "flex", alignItems: "center", justifyContent: "center",
                 border: "1.5px solid #6C63FF",
-              }}>0</span>
+              }}>{cartCount > 99 ? "99+" : cartCount}</span>
             </div>
             Cart
           </button>
@@ -790,7 +794,7 @@ export default function Navbar({ onCategoryToggle }: Props) {
       }}>
         {[
           { label: "Home", href: "/", active: true, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6" /></svg> },
-          { label: "Shop", href: "#", active: false, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg> },
+          { label: "Shop", href: "/shop", active: false, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg> },
           { label: "Support", href: "#", active: false, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="12" r="10" /><path strokeLinecap="round" d="M12 8v4M12 16h.01" /></svg> },
           { label: "Contact", href: "#", active: false, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg> },
         ].map(item => (

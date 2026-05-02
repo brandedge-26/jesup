@@ -1,8 +1,9 @@
 "use client";
-import { useState } from "react";
+import { useState, type JSX } from "react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import CategorySidebar from "@/components/CategorySidebar";
+import Image from "next/image";
 
 const PRIMARY = "#6C63FF";
 const PRIMARY_LIGHT = "#f0eeff";
@@ -58,86 +59,29 @@ const SERVICES = [
   },
 ];
 
-// Brand logo SVGs — simplified iconic marks
+// Brand logo images — using downloaded SVG files + inline text SVGs for brands not in Simple Icons
 const BRAND_LOGOS: Record<string, JSX.Element> = {
-  Apple: (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
-      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
-    </svg>
-  ),
-  Samsung: (
-    <svg viewBox="0 0 80 20" fill="currentColor" width="80" height="20">
-      <text x="0" y="16" fontSize="16" fontWeight="700" fontFamily="Arial, sans-serif" letterSpacing="1">SAMSUNG</text>
-    </svg>
-  ),
-  OnePlus: (
-    <svg viewBox="0 0 60 24" fill="currentColor" width="60" height="24">
-      <text x="0" y="19" fontSize="18" fontWeight="900" fontFamily="Arial, sans-serif">1+</text>
-      <text x="28" y="19" fontSize="14" fontWeight="700" fontFamily="Arial, sans-serif">OnePlus</text>
-    </svg>
-  ),
-  Oppo: (
-    <svg viewBox="0 0 60 24" fill="currentColor" width="60" height="24">
-      <text x="0" y="19" fontSize="18" fontWeight="800" fontFamily="Arial, sans-serif" letterSpacing="1">OPPO</text>
-    </svg>
-  ),
-  Realme: (
-    <svg viewBox="0 0 72 24" fill="currentColor" width="72" height="24">
-      <text x="0" y="19" fontSize="16" fontWeight="800" fontFamily="Arial, sans-serif">realme</text>
-    </svg>
-  ),
-  Vivo: (
-    <svg viewBox="0 0 48 24" fill="currentColor" width="48" height="24">
-      <text x="0" y="19" fontSize="18" fontWeight="800" fontFamily="Arial, sans-serif" letterSpacing="1">vivo</text>
-    </svg>
-  ),
-  Xiaomi: (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
-      <rect x="2" y="6" width="8" height="12" rx="4"/>
-      <rect x="14" y="6" width="8" height="12" rx="4"/>
-      <rect x="7" y="6" width="10" height="12" rx="0"/>
-    </svg>
-  ),
-  Huawei: (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
-      <path d="M12 2l2.4 4.8L12 12 9.6 6.8 12 2zm0 20l-2.4-4.8L12 12l2.4 5.2L12 22zm10-10l-4.8 2.4L12 12l5.2-2.4L22 12zm-20 0l4.8-2.4L12 12l-5.2 2.4L2 12zm17.07-7.07l-4.24 3.3L12 12l2.83-5.19 4.24-1.88zm-14.14 0l4.24 1.88L12 12 9.17 6.81 4.93 4.93zm14.14 14.14l-4.24-1.88L12 12l2.83 5.19 4.24 1.88zm-14.14 0l4.24-3.3L12 12l-2.83 5.19-4.24 1.88z"/>
-    </svg>
-  ),
-  Motorola: (
-    <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
-      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
-    </svg>
-  ),
-  Nokia: (
-    <svg viewBox="0 0 60 24" fill="currentColor" width="60" height="24">
-      <text x="0" y="19" fontSize="17" fontWeight="800" fontFamily="Arial, sans-serif" letterSpacing="2">NOKIA</text>
-    </svg>
-  ),
-  Tecno: (
-    <svg viewBox="0 0 66 24" fill="currentColor" width="66" height="24">
-      <text x="0" y="19" fontSize="16" fontWeight="800" fontFamily="Arial, sans-serif" letterSpacing="1">TECNO</text>
-    </svg>
-  ),
-  Infinix: (
-    <svg viewBox="0 0 70 24" fill="currentColor" width="70" height="24">
-      <text x="0" y="19" fontSize="15" fontWeight="800" fontFamily="Arial, sans-serif" letterSpacing="1">INFINIX</text>
-    </svg>
-  ),
+  Apple: <Image src="/brands/apple.svg" alt="Apple" width={28} height={28} style={{ objectFit: "contain" }} />,
+  Samsung: <Image src="/brands/samsung.svg" alt="Samsung" width={80} height={24} style={{ objectFit: "contain" }} />,
+  OnePlus: <Image src="/brands/oneplus.svg" alt="OnePlus" width={36} height={36} style={{ objectFit: "contain" }} />,
+  Oppo: <Image src="/brands/oppo.svg" alt="Oppo" width={60} height={28} style={{ objectFit: "contain" }} />,
+  Vivo: <Image src="/brands/vivo.svg" alt="Vivo" width={52} height={24} style={{ objectFit: "contain" }} />,
+  Xiaomi: <Image src="/brands/xiaomi.svg" alt="Xiaomi" width={32} height={32} style={{ objectFit: "contain" }} />,
+  Huawei: <Image src="/brands/huawei.svg" alt="Huawei" width={32} height={32} style={{ objectFit: "contain" }} />,
+  Motorola: <Image src="/brands/motorola.svg" alt="Motorola" width={32} height={32} style={{ objectFit: "contain" }} />,
+  Nokia: <Image src="/brands/nokia.svg" alt="Nokia" width={60} height={24} style={{ objectFit: "contain" }} />,
 };
 
 const MARQUEE_BRANDS = [
-  { name: "Apple",   color: "#111111" },
+  { name: "Apple", color: "#111111" },
   { name: "Samsung", color: "#1428A0" },
   { name: "OnePlus", color: "#F5010C" },
-  { name: "Oppo",    color: "#1D5E2A" },
-  { name: "Realme",  color: "#F5A623" },
-  { name: "Vivo",    color: "#415FFF" },
-  { name: "Xiaomi",  color: "#FF6900" },
-  { name: "Huawei",  color: "#CF0A2C" },
-  { name: "Motorola",color: "#0000E6" },
-  { name: "Nokia",   color: "#124191" },
-  { name: "Tecno",   color: "#0080FF" },
-  { name: "Infinix", color: "#111111" },
+  { name: "Oppo", color: "#1D5E2A" },
+  { name: "Vivo", color: "#415FFF" },
+  { name: "Xiaomi", color: "#FF6900" },
+  { name: "Huawei", color: "#CF0A2C" },
+  { name: "Motorola", color: "#0000E6" },
+  { name: "Nokia", color: "#124191" },
 ];
 
 const WHY_US = [
@@ -197,23 +141,37 @@ export default function RepairPage() {
     setTimeout(() => { setSubmitted(false); setForm({ name: "", whatsapp: "", email: "", model: "", message: "" }); }, 300);
   };
 
-  const field = (label: string, key: keyof FormData, type = "text", placeholder = "") => (
+  const field = (label: string, key: keyof FormData, type = "text", placeholder = "", icon?: string) => (
     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-      <label style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#374151" }}>{label}</label>
-      <input
-        type={type}
-        placeholder={placeholder}
-        value={form[key]}
-        required
-        onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
-        style={{
-          padding: "11px 14px", borderRadius: 10, fontSize: "0.9rem", color: "#111",
-          border: "1.5px solid #e5e7eb", outline: "none", fontFamily: "inherit",
-          transition: "border-color 0.15s",
-        }}
-        onFocus={e => (e.currentTarget.style.borderColor = PRIMARY)}
-        onBlur={e => (e.currentTarget.style.borderColor = "#e5e7eb")}
-      />
+      <label style={{ fontSize: "0.6875rem", fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.07em" }}>{label}</label>
+      <div style={{ position: "relative" }}>
+        {icon && (
+          <div style={{ pointerEvents: "none", position: "absolute", top: 0, bottom: 0, left: 13, display: "flex", alignItems: "center" }}>
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#b0b7c3" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d={icon} />
+            </svg>
+          </div>
+        )}
+        <input
+          type={type}
+          placeholder={placeholder}
+          value={form[key]}
+          required
+          onChange={e => setForm(f => ({ ...f, [key]: e.target.value }))}
+          className="outline-none ring-offset-2 focus:ring-2 focus:ring-violet-500 transition-shadow"
+          style={{
+            width: "100%", boxSizing: "border-box",
+            paddingTop: 11, paddingBottom: 11,
+            paddingLeft: icon ? 38 : 14, paddingRight: 14,
+            borderRadius: 10, fontSize: "0.875rem",
+            color: "#111", backgroundColor: "#f9fafb",
+            border: "1.5px solid #e5e7eb",
+            fontFamily: "inherit",
+          }}
+          onFocus={e => { e.currentTarget.style.backgroundColor = "#fff"; e.currentTarget.style.borderColor = "#a5b4fc"; }}
+          onBlur={e => { e.currentTarget.style.backgroundColor = "#f9fafb"; e.currentTarget.style.borderColor = "#e5e7eb"; }}
+        />
+      </div>
     </div>
   );
 
@@ -380,13 +338,13 @@ export default function RepairPage() {
               <div className="marquee-track">
                 {[...MARQUEE_BRANDS, ...MARQUEE_BRANDS].map((b, i) => (
                   <div key={i} style={{
-                    display: "flex", alignItems: "center", gap: 10, flexShrink: 0,
-                    padding: "12px 32px",
+                    display: "flex", alignItems: "center", justifyContent: "center", gap: 10, flexShrink: 0,
+                    padding: "14px 36px",
                     borderRight: "1px solid #f0f0f4",
                     color: b.color,
+                    minWidth: 120,
                   }}>
                     {BRAND_LOGOS[b.name]}
-                    {/* Separator dot after last item before repeat */}
                   </div>
                 ))}
               </div>
@@ -394,22 +352,39 @@ export default function RepairPage() {
           </div>
 
           {/* ── Why Choose Us ── */}
-          <div style={{ backgroundColor: "#f8fafc", padding: "3.5rem 0" }}>
-            <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px" }}>
+          <div style={{ backgroundColor: "#0a0a0f", padding: "3.5rem 0", position: "relative", overflow: "hidden" }}>
+            {/* Grid overlay */}
+            <div style={{ position: "absolute", inset: 0, backgroundImage: "linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)", backgroundSize: "48px 48px", pointerEvents: "none" }} />
+            {/* Purple glow top-center */}
+            <div style={{ position: "absolute", top: 0, left: "50%", transform: "translateX(-50%)", width: 900, height: 320, background: "radial-gradient(ellipse at 50% 0%, rgba(108,99,255,0.22) 0%, transparent 68%)", pointerEvents: "none" }} />
+
+            <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 20px", position: "relative" }}>
               <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
                 <p style={{ fontSize: "0.6875rem", fontWeight: 700, letterSpacing: "0.12em", textTransform: "uppercase", color: PRIMARY, marginBottom: "0.5rem" }}>Why Jesup Wireless</p>
-                <h2 style={{ fontSize: "clamp(1.4rem, 2.5vw, 2rem)", fontWeight: 800, color: "#111", letterSpacing: "-0.04em" }}>The Repair Shop That Puts You First</h2>
+                <h2 style={{ fontSize: "clamp(1.4rem, 2.5vw, 2rem)", fontWeight: 800, color: "#fff", letterSpacing: "-0.04em" }}>The Repair Shop That Puts You First</h2>
               </div>
               <div className="repair-why">
                 {WHY_US.map(w => (
-                  <div key={w.title} style={{ padding: "24px", backgroundColor: "#fff", border: "1px solid #e5e7eb", borderRadius: 18 }}>
-                    <div style={{ width: 48, height: 48, borderRadius: 13, backgroundColor: w.bg, display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
+                  <div key={w.title} style={{
+                    padding: "26px",
+                    backgroundColor: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.08)",
+                    borderRadius: 18,
+                    backdropFilter: "blur(8px)",
+                    transition: "border-color 0.2s, background 0.2s",
+                  }}>
+                    <div style={{
+                      width: 48, height: 48, borderRadius: 13,
+                      backgroundColor: w.color + "1a",
+                      border: `1px solid ${w.color}44`,
+                      display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16,
+                    }}>
                       <svg width="22" height="22" fill="none" viewBox="0 0 24 24" stroke={w.color} strokeWidth={1.7}>
                         <path strokeLinecap="round" strokeLinejoin="round" d={w.icon} />
                       </svg>
                     </div>
-                    <p style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#111", marginBottom: 8 }}>{w.title}</p>
-                    <p style={{ fontSize: "0.8125rem", color: "#6b7280", lineHeight: 1.7 }}>{w.desc}</p>
+                    <p style={{ fontSize: "0.9375rem", fontWeight: 700, color: "#fff", marginBottom: 8 }}>{w.title}</p>
+                    <p style={{ fontSize: "0.8125rem", color: "rgba(255,255,255,0.5)", lineHeight: 1.7 }}>{w.desc}</p>
                   </div>
                 ))}
               </div>
@@ -489,104 +464,130 @@ export default function RepairPage() {
           {/* Backdrop */}
           <div
             onClick={closeModal}
-            style={{ position: "fixed", inset: 0, backgroundColor: "rgba(0,0,0,0.55)", zIndex: 100, backdropFilter: "blur(4px)" }}
+            className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm"
           />
 
           {/* Modal */}
-          <div style={{ position: "fixed", inset: 0, zIndex: 101, display: "flex", alignItems: "center", justifyContent: "center", padding: "16px" }}>
-            <div className="modal-box" style={{
-              width: "100%", maxWidth: 500, maxHeight: "90dvh",
-              backgroundColor: "#fff", borderRadius: 24,
-              overflow: "hidden", display: "flex", flexDirection: "column",
-              boxShadow: "0 24px 80px rgba(0,0,0,0.3)",
-            }}>
-              {/* Modal header */}
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "20px 24px 18px", borderBottom: "1px solid #f0f0f4", flexShrink: 0 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  <div style={{ width: 38, height: 38, borderRadius: "50%", backgroundColor: PRIMARY, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                    <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2.2}>
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          <div className="fixed inset-0 z-[101] flex items-center justify-center p-4">
+            <div className="modal-box w-full max-w-lg max-h-[92dvh] bg-white rounded-3xl overflow-hidden flex flex-col shadow-2xl">
+
+              {/* ── Modal header (dark) ── */}
+              <div className="relative flex-shrink-0 overflow-hidden" style={{ background: "#0a0a0f", padding: "28px 28px 24px" }}>
+                {/* subtle grid */}
+                <div className="pointer-events-none absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px)", backgroundSize: "32px 32px" }} />
+                {/* glow */}
+                <div className="pointer-events-none absolute -top-10 left-1/2 -translate-x-1/2 w-72 h-40 rounded-full" style={{ background: "radial-gradient(ellipse,rgba(108,99,255,0.35) 0%,transparent 70%)" }} />
+
+                <div className="relative flex items-start justify-between gap-4">
+                  <div className="flex items-center gap-3">
+                    <div className="flex-shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center" style={{ backgroundColor: PRIMARY, boxShadow: "0 4px 20px rgba(108,99,255,0.5)" }}>
+                      <svg width="19" height="19" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2.2}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="font-bold text-white" style={{ fontSize: "1.0625rem", letterSpacing: "-0.03em" }}>Book a Repair</p>
+                      <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.45)" }}>We&apos;ll confirm via WhatsApp</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={closeModal}
+                    className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                    style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}
+                    onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.16)"}
+                    onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"}
+                  >
+                    <svg width="13" height="13" fill="none" viewBox="0 0 24 24" stroke="rgba(255,255,255,0.7)" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
                     </svg>
-                  </div>
-                  <div>
-                    <p style={{ fontWeight: 800, fontSize: "1rem", color: "#111", letterSpacing: "-0.03em" }}>Book a Repair</p>
-                    <p style={{ fontSize: "0.7rem", color: "#9ca3af", fontWeight: 500 }}>We&apos;ll contact you on WhatsApp to confirm</p>
-                  </div>
+                  </button>
                 </div>
-                <button
-                  onClick={closeModal}
-                  style={{ width: 34, height: 34, borderRadius: "50%", border: "1px solid #e8e8f0", backgroundColor: "#f8f8fb", cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", transition: "background 0.15s" }}
-                  onMouseEnter={e => (e.currentTarget as HTMLElement).style.backgroundColor = "#eeeef4"}
-                  onMouseLeave={e => (e.currentTarget as HTMLElement).style.backgroundColor = "#f8f8fb"}
-                >
-                  <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="#555" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
-                </button>
+
+
               </div>
 
-              {/* Modal body */}
-              <div style={{ overflowY: "auto", flex: 1, padding: "24px" }}>
+              {/* ── Modal body ── */}
+              <div style={{ overflowY: "auto", flex: 1, padding: "24px 28px", backgroundColor: "#fff" }}>
                 {submitted ? (
                   /* Success state */
-                  <div style={{ textAlign: "center", padding: "2rem 1rem" }}>
-                    <div style={{ width: 64, height: 64, borderRadius: "50%", backgroundColor: "#f0fdf4", display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 1.25rem" }}>
-                      <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="#16a34a" strokeWidth={2}>
+                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "2rem 1rem" }}>
+                    <div style={{ width: 64, height: 64, borderRadius: "50%", background: "linear-gradient(135deg,#f0fdf4,#dcfce7)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: 16 }}>
+                      <svg width="30" height="30" fill="none" viewBox="0 0 24 24" stroke="#16a34a" strokeWidth={2.2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
                       </svg>
                     </div>
                     <h3 style={{ fontSize: "1.125rem", fontWeight: 800, color: "#111", marginBottom: 8, letterSpacing: "-0.03em" }}>Booking Received!</h3>
                     <p style={{ fontSize: "0.875rem", color: "#6b7280", lineHeight: 1.7, marginBottom: "1.5rem" }}>
-                      Thanks, <strong>{form.name}</strong>! Our team will reach out on WhatsApp at <strong>{form.whatsapp}</strong> shortly to confirm your repair booking.
+                      Thanks, <strong style={{ color: "#374151" }}>{form.name}</strong>! Our team will reach out on WhatsApp at <strong style={{ color: "#374151" }}>{form.whatsapp}</strong> shortly to confirm your repair.
                     </p>
                     <button
                       onClick={closeModal}
-                      style={{ padding: "11px 28px", borderRadius: 999, backgroundColor: PRIMARY, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.9rem", cursor: "pointer", fontFamily: "inherit" }}
+                      style={{ padding: "10px 28px", borderRadius: 999, backgroundColor: PRIMARY, color: "#fff", border: "none", fontWeight: 700, fontSize: "0.875rem", cursor: "pointer", fontFamily: "inherit" }}
+                      onMouseEnter={e => (e.currentTarget as HTMLElement).style.backgroundColor = "#5a52d5"}
+                      onMouseLeave={e => (e.currentTarget as HTMLElement).style.backgroundColor = PRIMARY}
                     >
                       Done
                     </button>
                   </div>
                 ) : (
-                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 16 }}>
-                    {field("Full Name", "name", "text", "e.g. John Smith")}
-                    {field("WhatsApp Number", "whatsapp", "tel", "e.g. +1 912 427 0000")}
-                    {field("Email Address", "email", "email", "e.g. john@email.com")}
-                    {field("Phone Model", "model", "text", "e.g. iPhone 14 Pro, Samsung S23 Ultra")}
+                  <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 14 }}>
 
-                    {/* Message textarea */}
+                    {/* Row 1: Name + WhatsApp */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                      {field("Full Name", "name", "text", "John Smith", "M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z")}
+                      {field("WhatsApp", "whatsapp", "tel", "+1 912 000 0000", "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z")}
+                    </div>
+
+                    {/* Row 2: Email + Phone Model */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
+                      {field("Email", "email", "email", "john@email.com", "M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207")}
+                      {field("Phone Model", "model", "text", "iPhone 14 Pro", "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z")}
+                    </div>
+
+                    {/* Issue description */}
                     <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
-                      <label style={{ fontSize: "0.8125rem", fontWeight: 600, color: "#374151" }}>Describe the Issue</label>
+                      <label style={{ fontSize: "0.6875rem", fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: "0.07em" }}>Describe the Issue</label>
                       <textarea
-                        placeholder="e.g. Screen is cracked on the top right corner, touch still works but display has lines..."
+                        placeholder="e.g. Screen is cracked, touch still works but display has lines..."
                         value={form.message}
                         required
-                        rows={4}
+                        rows={3}
                         onChange={e => setForm(f => ({ ...f, message: e.target.value }))}
+                        className="outline-none ring-offset-2 focus:ring-2 focus:ring-violet-500 transition-shadow"
                         style={{
-                          padding: "11px 14px", borderRadius: 10, fontSize: "0.9rem", color: "#111",
-                          border: "1.5px solid #e5e7eb", outline: "none", fontFamily: "inherit",
-                          resize: "vertical", transition: "border-color 0.15s",
+                          width: "100%", boxSizing: "border-box",
+                          padding: "11px 14px", borderRadius: 10,
+                          fontSize: "0.875rem", color: "#111",
+                          backgroundColor: "#f9fafb", border: "1.5px solid #e5e7eb",
+                          fontFamily: "inherit", resize: "none",
                         }}
-                        onFocus={e => (e.currentTarget.style.borderColor = PRIMARY)}
-                        onBlur={e => (e.currentTarget.style.borderColor = "#e5e7eb")}
+                        onFocus={e => { e.currentTarget.style.backgroundColor = "#fff"; e.currentTarget.style.borderColor = "#a5b4fc"; }}
+                        onBlur={e => { e.currentTarget.style.backgroundColor = "#f9fafb"; e.currentTarget.style.borderColor = "#e5e7eb"; }}
                       />
                     </div>
 
+
+
+                    {/* Submit */}
                     <button
                       type="submit"
                       style={{
-                        marginTop: 4, padding: "13px 0", borderRadius: 999,
-                        backgroundColor: PRIMARY, color: "#fff", border: "none",
-                        fontWeight: 700, fontSize: "0.9375rem", cursor: "pointer",
-                        fontFamily: "inherit", display: "flex", alignItems: "center",
-                        justifyContent: "center", gap: 8, transition: "background 0.15s",
+                        width: "100%", display: "flex", alignItems: "center", justifyContent: "center",
+                        gap: 10, padding: "14px 0", borderRadius: 14, border: "none",
+                        backgroundColor: PRIMARY, color: "#fff", fontSize: "0.9375rem", fontWeight: 700,
+                        cursor: "pointer", fontFamily: "inherit",
+                        boxShadow: "0 4px 20px rgba(108,99,255,0.35)",
+                        transition: "background 0.15s, transform 0.15s",
                       }}
-                      onMouseEnter={e => (e.currentTarget as HTMLElement).style.backgroundColor = "#5a52d5"}
-                      onMouseLeave={e => (e.currentTarget as HTMLElement).style.backgroundColor = PRIMARY}
+                      onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#5a52d5"; (e.currentTarget as HTMLElement).style.transform = "translateY(-1px)"; }}
+                      onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = PRIMARY; (e.currentTarget as HTMLElement).style.transform = "none"; }}
                     >
                       <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
                       </svg>
                       Submit Booking
                     </button>
+
                   </form>
                 )}
               </div>
