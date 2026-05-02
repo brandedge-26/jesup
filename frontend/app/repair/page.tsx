@@ -464,15 +464,15 @@ export default function RepairPage() {
           {/* Backdrop */}
           <div
             onClick={closeModal}
-            className="fixed inset-0 z-[100] bg-black/60 backdrop-blur-sm"
+            className="fixed inset-0 z-100 bg-black/60 backdrop-blur-sm"
           />
 
           {/* Modal */}
-          <div className="fixed inset-0 z-[101] flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-101 flex items-center justify-center p-4">
             <div className="modal-box w-full max-w-lg max-h-[92dvh] bg-white rounded-3xl overflow-hidden flex flex-col shadow-2xl">
 
               {/* ── Modal header (dark) ── */}
-              <div className="relative flex-shrink-0 overflow-hidden" style={{ background: "#0a0a0f", padding: "28px 28px 24px" }}>
+              <div className="relative shrink-0 overflow-hidden" style={{ background: "#0a0a0f", padding: "28px 28px 24px" }}>
                 {/* subtle grid */}
                 <div className="pointer-events-none absolute inset-0" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.04) 1px,transparent 1px)", backgroundSize: "32px 32px" }} />
                 {/* glow */}
@@ -480,7 +480,7 @@ export default function RepairPage() {
 
                 <div className="relative flex items-start justify-between gap-4">
                   <div className="flex items-center gap-3">
-                    <div className="flex-shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center" style={{ backgroundColor: PRIMARY, boxShadow: "0 4px 20px rgba(108,99,255,0.5)" }}>
+                    <div className="shrink-0 w-11 h-11 rounded-2xl flex items-center justify-center" style={{ backgroundColor: PRIMARY, boxShadow: "0 4px 20px rgba(108,99,255,0.5)" }}>
                       <svg width="19" height="19" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2.2}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                       </svg>
@@ -492,7 +492,7 @@ export default function RepairPage() {
                   </div>
                   <button
                     onClick={closeModal}
-                    className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors"
+                    className="shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-colors"
                     style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.12)" }}
                     onMouseEnter={e => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.16)"}
                     onMouseLeave={e => (e.currentTarget as HTMLElement).style.background = "rgba(255,255,255,0.08)"}

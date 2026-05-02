@@ -1,6 +1,5 @@
 // "use client";
 // import { useState, useRef, useEffect } from "react";
-// import Link from "next/link";
 // // useRef retained for transitioning ref below
 // import CartSidebar from "./CartSidebar";
 
@@ -381,10 +380,10 @@ const NAV_LINKS = [
   { label: "Repair Services", href: "/repair" },
 ];
 
-const SEARCH_CATEGORIES = [
-  "All", "Mobile Parts", "LCD Panels", "Touch Glass",
-  "Tablet Parts", "Used Phones", "Laptops",
-];
+// const SEARCH_CATEGORIES = [
+//   "All", "Mobile Parts", "LCD Panels", "Touch Glass",
+//   "Tablet Parts", "Used Phones", "Laptops",
+// ];
 
 /* ── Search bar — defined OUTSIDE Navbar so React never remounts it on re-render ── */
 interface SearchBarProps {
@@ -562,35 +561,58 @@ export default function Navbar({ onCategoryToggle }: Props) {
             </span>
           </Link>
 
-          {/* Cart */}
-          <button
-            onClick={() => setCartOpen(true)}
-            style={{
-              position: "relative", display: "flex", alignItems: "center", gap: 8,
-              padding: "3px 12px 3px 3px", height: 36, borderRadius: 999,
-              backgroundColor: "#f0f2f8", color: "#111",
-              border: "1px solid #e2e5f0", cursor: "pointer",
-              fontSize: "0.8rem", fontWeight: 600, flexShrink: 0,
-              transition: "background-color 0.14s, border-color 0.14s",
-            }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#e6e9f5"; (e.currentTarget as HTMLElement).style.borderColor = "#c7cde8"; }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#f0f2f8"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e5f0"; }}
-          >
-            <div style={{ width: 30, height: 30, borderRadius: "50%", backgroundColor: "#6C63FF", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0, position: "relative" }}>
-              <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="white" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-              </svg>
-              <span style={{
-                position: "absolute", top: -4, right: -4,
-                width: 14, height: 14, borderRadius: "50%",
-                backgroundColor: "#fff", color: "#6C63FF",
-                fontSize: "0.45rem", fontWeight: 900,
+
+
+          {/* Cart and login */}
+          <div className="flex items-center gap-2">
+            {/* Cart Button */}
+            <button
+              onClick={() => setCartOpen(true)}
+              style={{
+                position: "relative", display: "flex", alignItems: "center", justifyContent: "center",
+                width: 36, height: 36, borderRadius: 999,
+                backgroundColor: "#f0f2f8", color: "#111",
+                border: "1px solid #e2e5f0", cursor: "pointer",
+                transition: "background-color 0.14s, border-color 0.14s",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#e6e9f5"; (e.currentTarget as HTMLElement).style.borderColor = "#c7cde8"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.backgroundColor = "#f0f2f8"; (e.currentTarget as HTMLElement).style.borderColor = "#e2e5f0"; }}
+            >
+              <div style={{ position: "relative" }}>
+                <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="#111" strokeWidth={2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                </svg>
+                <span style={{
+                  position: "absolute", top: -6, right: -6,
+                  minWidth: 16, height: 16, borderRadius: "50%",
+                  backgroundColor: "#6C63FF", color: "#fff",
+                  fontSize: "0.55rem", fontWeight: 900,
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  border: "2px solid #fff", padding: "0 2px"
+                }}>{cartCount > 99 ? "99+" : cartCount}</span>
+              </div>
+            </button>
+
+            {/* Login Button: Icon only + Redirect */}
+            <button
+              onClick={() => window.location.href = '/login'}
+              style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
-                border: "1.5px solid #6C63FF",
-              }}>{cartCount > 99 ? "99+" : cartCount}</span>
-            </div>
-            Cart
-          </button>
+                width: 36, height: 36, borderRadius: 999,
+                backgroundColor: "#6C63FF", color: "#fff",
+                border: "none", cursor: "pointer",
+                transition: "opacity 0.14s",
+              }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.85"; }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; }}
+            >
+              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+              </svg>
+            </button>
+          </div>
+
+
         </div>
 
         {/* Row 2 — Search */}
@@ -624,12 +646,12 @@ export default function Navbar({ onCategoryToggle }: Props) {
             gap: 24, height: 76,
           }}>
             {/* Logo — text only */}
-            <a href="/" style={{ textDecoration: "none", flexShrink: 0, userSelect: "none" }}>
+            <Link href="/" style={{ textDecoration: "none", flexShrink: 0, userSelect: "none" }}>
               <span style={{ fontSize: "1.5rem", fontWeight: 900, letterSpacing: "-0.045em" }}>
                 <span style={{ color: "#111" }}>Jes</span>
                 <span style={{ color: "#6C63FF" }}>up</span>
               </span>
-            </a>
+            </Link>
 
             {/* Search — grows to fill space */}
             <div style={{ flex: 1, minWidth: 0 }}>
@@ -795,8 +817,8 @@ export default function Navbar({ onCategoryToggle }: Props) {
         {[
           { label: "Home", href: "/", active: true, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0h6" /></svg> },
           { label: "Shop", href: "/shop", active: false, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" /></svg> },
-          { label: "Support", href: "#", active: false, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="12" r="10" /><path strokeLinecap="round" d="M12 8v4M12 16h.01" /></svg> },
-          { label: "Contact", href: "#", active: false, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg> },
+          { label: "Support", href: "/support", active: false, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><circle cx="12" cy="12" r="10" /><path strokeLinecap="round" d="M12 8v4M12 16h.01" /></svg> },
+          { label: "Contact", href: "/contact", active: false, icon: <svg width="21" height="21" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.8}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.7₁6 ₂₁ ₃ ₁₄.₂₈₄ ₃ ₆V5z" /></svg> },
         ].map(item => (
           <a
             key={item.label}
