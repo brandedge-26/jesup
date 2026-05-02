@@ -562,8 +562,7 @@ export default function Navbar({ onCategoryToggle }: Props) {
           </Link>
 
 
-
-          {/* Cart and login */}
+          {/* Cart and login btn */}
           <div className="flex items-center gap-2">
             {/* Cart Button */}
             <button
@@ -593,23 +592,22 @@ export default function Navbar({ onCategoryToggle }: Props) {
               </div>
             </button>
 
-            {/* Login Button: Icon only + Redirect */}
-            <button
-              onClick={() => window.location.href = '/login'}
+            {/* Login Link with Person Icon */}
+            <Link href="/login"
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
                 width: 36, height: 36, borderRadius: 999,
                 backgroundColor: "#6C63FF", color: "#fff",
-                border: "none", cursor: "pointer",
-                transition: "opacity 0.14s",
+                cursor: "pointer", transition: "opacity 0.14s",
               }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.opacity = "0.85"; }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.opacity = "1"; }}
             >
-              <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+              {/* Person/User Icon */}
+              <svg width="20" height="20" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                <path strokeLinecap="round" strokeLinejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
               </svg>
-            </button>
+            </Link>
           </div>
 
 
